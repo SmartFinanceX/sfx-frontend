@@ -1,5 +1,3 @@
-/****** PLACE YOUR CUSTOM STYLES HERE ******/
-/*青岛研锦网络科技有限公司   版权所有*/
 var legal_person_data = {"uploadData":[{"count":630},{"count":986},{"count":792},{"count":642},{"count":521},{"count":573}
 					,{"count":832},{"count":747},{"count":983},{"count":836},{"count":831},{"count":633}],
 		"updateData":[{"count":110},{"count":181},{"count":123},{"count":197},{"count":123},{"count":173}

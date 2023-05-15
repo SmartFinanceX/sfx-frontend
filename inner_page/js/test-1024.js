@@ -1,8 +1,3 @@
-/****** 
-版权所有
-云码资源淘宝店铺  大数据可视化大屏模板专家
-https://shop188702750.taobao.com/search.htm?spm=a1z10.1-c.0.0.1221421cqgmNaI&search=y
-******/
 var legal_person_data = {"uploadData":[{"count":630},{"count":986},{"count":792},{"count":642},{"count":521},{"count":573}
 					,{"count":832},{"count":747},{"count":983},{"count":836},{"count":831},{"count":633}],
 		"updateData":[{"count":110},{"count":181},{"count":123},{"count":197},{"count":123},{"count":173}
@@ -75,12 +70,6 @@ init_myChart3(legal_person_data);
 init_myChart5();
 init_myChart6();
 init_myChart7();
-
-/****** 
-版权所有
-云码资源淘宝店铺  大数据可视化大屏模板专家
-https://shop188702750.taobao.com/search.htm?spm=a1z10.1-c.0.0.1221421cqgmNaI&search=y
-******/
 function init_myChart3(data) {
 
 	var uploadCnt = [];
@@ -282,11 +271,6 @@ function init_myChart3(data) {
 	};
 	myChart3.setOption(option);
 }
-/****** 
-版权所有
-云码资源淘宝店铺  大数据可视化大屏模板专家
-https://shop188702750.taobao.com/search.htm?spm=a1z10.1-c.0.0.1221421cqgmNaI&search=y
-******/
 function init_myChart2() {
 	var data = {"uploadData":[{"count":3230},{"count":2986},{"count":3392},{"count":2642},{"count":3521},{"count":2573}
 							,{"count":3132},{"count":3147},{"count":3283},{"count":3336},{"count":3831},{"count":3633}],
@@ -494,11 +478,7 @@ function init_myChart2() {
 	myChart2.setOption(option);
 }
 
-/****** 
-版权所有
-云 码 资 源 淘 宝 店 铺  大数据可视化大屏模板专家
-https://shop188702750.taobao.com/search.htm?spm=a1z10.1-c.0.0.1221421cqgmNaI&search=y
-******/
+
 function init_myChart1(){
 	option = {
 			tooltip : {
