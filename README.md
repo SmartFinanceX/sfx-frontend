@@ -13,6 +13,10 @@ npm install
 pnpm install
 ```
 
+这里我使用的pnpm
+
+组件库选用vuetify
+
 ### Compiles and hot-reloads for development
 
 ```
