@@ -14,9 +14,9 @@
       <div class="container">
         <span class="in"
           ><b
-            >预计在{{ date }}，以{{ yuce }}的概率，该公司的{{ name }}将会达到{{
-              value
-            }}</b
+            >预计在{{ date }}，以{{ yuce }}的拟合程度，该公司的{{
+              name
+            }}将会达到{{ value }}</b
           ></span
         >
       </div>
