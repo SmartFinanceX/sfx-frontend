@@ -46,7 +46,7 @@ export default {
     //画公司价值图
     draw(data) {
       // var data = data1.finanace_data;
-      console.log(data);
+      // console.log(data);
       var chartDom = document.getElementById("main");
       var myChart = echarts.init(chartDom);
       var option;
