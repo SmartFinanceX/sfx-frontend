@@ -42,9 +42,14 @@ const routes = [
             props: true,
             children: [
               {
+                name: 'IncInfoHome',
+                path: '',
+                component: () => import('@/components/inc/BasicInfo.vue'),
+              },
+              {
                 name: 'BasicInfo',
                 path: 'basicinfo',
-                component: () => import('@/components/inc/BasicInfo.vue'),
+                redirect: { name: 'IncInfoHome' }
               },
               {
                 name: 'Predict',

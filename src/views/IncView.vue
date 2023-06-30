@@ -3,8 +3,11 @@
     <v-container>
         <v-app-bar>
             <v-app-bar-title>
-                {{ ticker }}
+                股票名字 {{ ticker }}
             </v-app-bar-title>
+            <v-btn prepend-icon="mdi-paperclip-plus" variant="text">
+                添加选股
+            </v-btn>
             <v-spacer></v-spacer>
             <router-link :to="{ name: 'BasicInfo' }">
                 <v-btn prepend-icon="mdi-poll" variant="text">
