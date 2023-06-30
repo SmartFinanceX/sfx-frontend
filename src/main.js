@@ -5,16 +5,24 @@
  */
 
 // Components
-import App from './App.vue'
+import App from "./App.vue";
 
 // Composables
-import { createApp } from 'vue'
+import { createApp } from "vue";
 
 // Plugins
-import { registerPlugins } from '@/plugins'
+import { registerPlugins } from "@/plugins";
+//axios
+import axios from "axios";
+//echarts
+import * as echarts from "echarts";
 
-const app = createApp(App)
+const app = createApp(App);
 
-registerPlugins(app)
+app.config.globalProperties.$http = axios;
 
-app.mount('#app')
+app.config.globalProperties.$echarts = echarts; //全局使用
+
+registerPlugins(app);
+
+app.mount("#app");
