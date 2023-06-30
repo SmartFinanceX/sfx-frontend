@@ -36,6 +36,7 @@ export default {
     watchlists: {
       handler(newItems) {
         localStorage.setItem('watchlists', JSON.stringify(newItems))
+        this.trigger = !this.trigger
       },
       deep: true
     }
@@ -48,7 +49,8 @@ export default {
     return {
       watchlists: [],
       stockName: "",
-      selcted: false
+      selcted: false,
+      trigger: false
     };
   },
   methods: {

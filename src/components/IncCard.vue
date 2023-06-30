@@ -17,8 +17,6 @@
                     <li>简介：{{ message }}</li>
                 </v-card-text>
             </v-container>
-
-
             <v-card-actions>
                 <v-btn v-on:click="addticker" v-if="!selcted" prepend-icon="mdi-paperclip-plus" variant="text"> 添加选股
                 </v-btn>
@@ -42,7 +40,8 @@ export default {
         loadedstockName: String,
         loadedfield: String,
         loadedlistDate: String,
-        loadedmsg: String
+        loadedmsg: String,
+        trigger: false,
     }, created() {
         // 从本地存储中加载数据
         this.getwatchlist();
@@ -54,9 +53,13 @@ export default {
         watchlists: {
             handler(newItems) {
                 localStorage.setItem('watchlists', JSON.stringify(newItems))
+                this.check();
                 this.$emit("fresh")
             },
             deep: true
+        },
+        trigger() {
+            this.getwatchlist();
         }
     },
     data: () => ({
@@ -66,12 +69,11 @@ export default {
         field: "",
         listDate: "",
         watchlists: [],
-        selcted: false
+        selcted: false,
     }),
     methods: {
         getwatchlist() {
             const watchlists = JSON.parse(localStorage.getItem('watchlists'))
-            console.log(watchlists)
             if (watchlists) {
                 this.watchlists = watchlists
             }
@@ -118,6 +120,14 @@ export default {
                 index = this.watchlists.indexOf(this.ticker)
             }
         },
+        check() {
+            var index = this.watchlists.indexOf(this.ticker)
+            if (index != -1) {
+                this.selcted = true;
+            } else {
+                this.selcted = false;
+            }
+        }
         // click() {
         //   console.log("[debug] 进行页面跳转" + this.ticker);
         //   router.push({ name: "Dashboard", params: { ticker: this.ticker } });
