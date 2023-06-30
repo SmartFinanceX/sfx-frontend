@@ -3,13 +3,13 @@
         <v-container>
             <v-col cols="12">
 
-                <v-text-field v-model="message" label="查询公司" type="text" variant="outlined">
+                <v-text-field v-model="msg" label="查询公司" type="text" variant="outlined" class="h.50">
                     <template v-slot:prepend>
                         <v-select label="搜索方式" v-model="way" :items="['关键词', '股票代码']" variant="underlined"></v-select>
                     </template>
 
                     <template v-slot:append>
-                        <v-btn prepend-icon="mdi-map-search" variant="text" v-on:click="search" h-50>
+                        <v-btn prepend-icon="mdi-map-search" variant="text" v-on:click="search">
                             搜索
                         </v-btn>
                     </template>
@@ -34,10 +34,13 @@
 
 <script>
 export default {
+    props: {
+        msg: String,
+        way: String
+    },
+
     data: () => ({
-        message: '',
         loading: false,
-        way: '关键词'
     }),
 
     methods: {
@@ -50,7 +53,7 @@ export default {
             }, 2000)
         },
         search() {
-            console.log("[debug] 查询" + this.way + this.message);
+            this.$emit('search', this.way, this.msg);
         }
     }
 }
