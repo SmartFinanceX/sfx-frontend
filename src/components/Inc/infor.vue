@@ -7,7 +7,7 @@
     <div class="middle">
       <div class="name content">公司： {{ fullName }}</div>
       <div class="= content">代码： {{ ticker }}</div>
-      <div class="field content">所属行业： {{ feild }}</div>
+      <div class="field content">所属行业： {{ field }}</div>
       <div class="time content">建立日期： {{ date }}</div>
     </div>
     <div class="bottom">
@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       fullName: "",
-      feild: "",
+      field: "",
       date: "",
       ticker: "",
       message: "",
@@ -45,15 +45,13 @@ export default {
   },
   methods: {
     givedata() {
+      console.log(this.infor);
       this.fullName = this.infor.fullName;
-      this.feild = this.infor.industryClass;
+      this.field = this.infor.industryClass;
       this.date = this.infor.listDate;
       this.ticker = this.infor.ticker;
       this.message = this.infor.description;
     },
-  },
-  mounted() {
-    this.givedata();
   },
 };
 </script>
@@ -64,7 +62,7 @@ export default {
 }
 .infor {
   display: inline-block;
-  width: 230px;
+  width: 300px;
   height: 400px;
 }
 .image {

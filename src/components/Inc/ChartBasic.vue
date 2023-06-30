@@ -3,7 +3,7 @@
     <div
       class="mychart"
       id="mainchart"
-      style="width: 700px; height: 400px"
+      style="width: 750px; height: 400px"
     ></div>
   </div>
 </template>
@@ -17,16 +17,15 @@ export default {
     },
   },
   data() {
-    return {};
-  },
-  mounted() {
-    this.draw(this.chartdata);
+    return {
+      name: "",
+    };
   },
   watch: {
     chartdata: {
       handler(newdata, olddata) {
         console.debug("Newdata");
-        console.log(newdata);
+        // console.log(newdata);
         this.draw(newdata);
       },
       deep: true,
@@ -35,13 +34,27 @@ export default {
   methods: {
     //画公司价值图
     draw(data) {
+      // let data = data1.finanace_data.reverse();
+      // let category = data1.category;
       var chartDom = document.getElementById("mainchart");
       var myChart = echarts.init(chartDom);
       var option;
 
+      // if (category == 1) {
+      //   this.name = "净利润";
+      // } else if (category == 2) {
+      //   this.name = "总收入";
+      // } else if (category == 3) {
+      //   this.name = "总成本";
+      // } else if (category == 4) {
+      //   this.name = "归母净利润";
+      // } else {
+      //   this.name = "扣非净利润";
+      // }
+
       option = {
         title: {
-          text: "公司市值变化",
+          // text: `公司${this.name}变化`,
         },
         tooltip: {
           trigger: "axis",
@@ -85,7 +98,7 @@ export default {
 
 <style scoped>
 .frame {
-  width: 930px;
+  width: 800px;
   height: 400px;
 }
 /* .mychart {
