@@ -51,14 +51,17 @@ export default {
             this.getInformation()
         },
         watchlists: {
-            handler(newItems) {
-                localStorage.setItem('watchlists', JSON.stringify(newItems))
+
+            handler() {
+                console.log(this.ticker + "wa")
+                localStorage.setItem('watchlists', JSON.stringify(this.watchlists))
                 this.check();
                 this.$emit("fresh")
             },
             deep: true
         },
         trigger() {
+            console.log("trigger")
             this.getwatchlist();
         }
     },
@@ -73,6 +76,7 @@ export default {
     }),
     methods: {
         getwatchlist() {
+            console.log(this.ticker + "watch")
             const watchlists = JSON.parse(localStorage.getItem('watchlists'))
             if (watchlists) {
                 this.watchlists = watchlists
@@ -107,6 +111,7 @@ export default {
             });
         },
         addticker() {
+            console.log(this.ticker + "add")
             this.selcted = true;
             this.getwatchlist();
             this.watchlists.push(this.ticker)
@@ -116,6 +121,10 @@ export default {
             this.selcted = false;
             var index = this.watchlists.indexOf(this.ticker)
             while (index != -1) {
+                if (this.watchlists.length == 1) {
+                    this.watchlists = []
+                    break;
+                }
                 this.watchlists.splice(index, 1)
                 index = this.watchlists.indexOf(this.ticker)
             }
