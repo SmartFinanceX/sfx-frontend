@@ -9,6 +9,7 @@ const routes = [
       {
         path: '',
         name: 'Home',
+        props: true,
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -34,6 +35,29 @@ const routes = [
             path: '/news',
             component: () => import('@/views/NewsView.vue'),
           },
+          {
+            name: 'IncInfo',
+            path: '/inc/:ticker',
+            component: () => import('@/views/IncView.vue'),
+            props: true,
+            children: [
+              {
+                name: 'BasicInfo',
+                path: 'basicinfo',
+                component: () => import('@/components/inc/BasicInfo.vue'),
+              },
+              {
+                name: 'Predict',
+                path: 'predict',
+                component: () => import('@/components/inc/Predict.vue'),
+              },
+              {
+                name: 'Stock',
+                path: 'stock',
+                component: () => import('@/components/inc/Stock.vue'),
+              },
+            ]
+          }
         ]
       },
 
