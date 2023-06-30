@@ -26,7 +26,8 @@
               :title="title"
               :prepend-icon="icon"
               :value="title"
-            @click="turn2(i)"></v-list-item>
+            @click="turn2(i)"
+            v-on:mouseover="changepicture1(i)" v-on:mouseout="returnpicture()"></v-list-item>
           </v-list-group>
 
           <v-list-group value="Actions">
@@ -43,6 +44,7 @@
               :value="title"
               :title="title"
               @click="turn3(i)"
+               v-on:mouseover="changepicture1(5)" v-on:mouseout="returnpicture()"
               :prepend-icon="icon"
             ></v-list-item>
           </v-list-group>
@@ -50,7 +52,7 @@
       </v-list>
   </v-card>
   <v-container class="picture-margin">
-    <img src="https://th.bing.com/th/id/OIP.BUa-cBK7ZNSAJb6UjFulzQHaE7?w=252&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7" class="picture">
+    <img v-bind:src="hovernow" class="picture">
   </v-container>
 
 </template>
@@ -81,6 +83,9 @@ export default {
       ['每位投资者都该问自己五个问题', 'mdi-plus-outline'],
       ['华泰证券：优选渠道掌控力等的龙头酒企', 'mdi-plus-outline'],
     ],
+    hoverbefore: 'https://th.bing.com/th/id/OIP.BUa-cBK7ZNSAJb6UjFulzQHaE7?w=252&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7',
+    hovernow: 'https://th.bing.com/th/id/OIP.BUa-cBK7ZNSAJb6UjFulzQHaE7?w=252&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7',
+
   }),
   methods:{
     turn2(i) {
@@ -115,7 +120,35 @@ export default {
           window.location.href = 'https://ys.mihoyo.com/?utm_source=adbdpz&from_channel=adbdpz#/';
           break;
       }
-    }
+    },
+    changepicture1(i) {
+       switch (i) {
+        case 0:
+           this.hovernow = '/src/assets/1.png';
+           this.$forceUpdate();
+          break;
+        case 1:
+         this.hovernow = '/src/assets/2.png';
+          this.$forceUpdate();
+          break;
+        case 2:
+           this.hovernow = '/src/assets/3.png';
+          break;
+        case 3:
+           this.hovernow = '/src/assets/4.png';
+          break;
+        case 4:
+           this.hovernow = '/src/assets/5.png';
+           break;
+         case 5:
+          this.hovernow='/src/assets/6.png'
+       }
+    },
+      returnpicture()
+      {
+        this.hovernow = this.hoverbefore;
+       this.$forceUpdate();
+      }
   }
 }
 </script>
@@ -124,8 +157,10 @@ export default {
 .picture-margin{
   margin-left: 33%;
   margin-top: 93px;
+  margin-bottom: 10px;
+
 }
 .picture{
-  transform: scale(1.4);
+  transform: scale(1.2);
 }
 </style>

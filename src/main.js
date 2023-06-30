@@ -11,9 +11,8 @@ import App from "./App.vue";
 import { createApp } from "vue";
 
 import { registerPlugins } from "@/plugins";
-//axios
+axios
 import axios from "axios";
-//echarts
 import * as echarts from "echarts";
 
 const app = createApp(App);
