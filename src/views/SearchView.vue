@@ -13,8 +13,9 @@
                     this.field = res.data.data.industryClass;
                     this.listDate = res.data.data.listDate.split("T")[0];
                     this.message = res.data.data.description; -->
-                <IncCard v-for="result in results" :loaded=true :loadedfield="result.industryClass" :ticker="result.ticker"
-                    :loadedstockName="result.stockName" :loadedlistDate="result.listDate" :loadedmsg="result.description">
+                <IncCard @fresh="fresh" v-for="result in results" :loaded=true :loadedfield="result.industryClass"
+                    :ticker="result.ticker" :loadedstockName="result.stockName" :loadedlistDate="result.listDate"
+                    :loadedmsg="result.description">
                 </IncCard>
             </v-list>
             <v-bottom-navigation class="align-center">
@@ -62,8 +63,20 @@ export default {
         page() {
             this.search(this.way, this.msg);
         }
+    }, created() {
+        // 从本地存储中加载数据
+        this.getwatchlist();
     },
     methods: {
+        getwatchlist() {
+            const watchlists = JSON.parse(localStorage.getItem('watchlists'))
+            console.log(watchlists)
+            if (watchlists) {
+                this.watchlists = watchlists
+            }
+        }, fresh() {
+            this.getwatchlist()
+        },
         search(way, msg2) {
             this.way = way;
             this.msg = msg2;

@@ -45,11 +45,7 @@ export default {
         loadedmsg: String
     }, created() {
         // 从本地存储中加载数据
-        const watchlists = JSON.parse(localStorage.getItem('watchlists'))
-        if (watchlists) {
-            this.watchlists = watchlists
-            this.selcted = watchlists.indexOf(this.ticker) !== -1
-        }
+        this.getwatchlist();
     },
     watch: {
         ticker() {
