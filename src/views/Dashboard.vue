@@ -1,15 +1,11 @@
 <template>
-  <v-container>
+  <v-container class=" d-flex flex-wrap">
     <p>您的收藏</p>
-    <div class="container">
-      <inc-card ticker="000001" class="mycard" />
-      <inc-card ticker="000002" class="mycard" />
-      <inc-card ticker="000008" class="mycard" />
-      <inc-card ticker="000004" class="mycard" />
-      <inc-card ticker="000005" class="mycard" />
-      <inc-card ticker="000006" class="mycard" />
-      <inc-card ticker="000007" class="mycard" />
-    </div>
+    <inc-card v-if="watchlists.length" @fresh="fresh" v-for="watchlist in watchlists" :ticker="watchlist" :loaded="false"
+      class="" />
+    <v-container v-else class=" w-50 aligin-center">
+      <v-card title="暂无收藏股票" text="去搜索或资讯逛逛吧" class="mycard"></v-card>
+    </v-container>
   </v-container>
 </template>
 <script setup>
@@ -18,11 +14,37 @@ import IncCard from "@/components/IncCard.vue";
 <script>
 export default {
   name: "Dashboard",
-
+  created() {
+    // 从本地存储中加载数据
+    this.getwatchlist()
+  },
+  watch: {
+    // 监听 items 数组的变化，并将其保存到本地存储中
+    items: {
+      handler(newItems) {
+        localStorage.setItem('watchlists', JSON.stringify(newItems))
+      },
+      deep: true
+    }
+  },
+  methods: {
+    getwatchlist() {
+      const watchlists = JSON.parse(localStorage.getItem('watchlists'))
+      console.log(watchlists)
+      if (watchlists) {
+        this.watchlists = watchlists
+      }
+    },
+    fresh() {
+      this.getwatchlist()
+    }
+  },
   components: {
     // IncCard: () => import("@/components/IncCard.vue"),
   },
-  data: () => ({}),
+  data: () => ({
+    watchlists: [],
+  }),
 };
 </script>
 
@@ -32,7 +54,14 @@ export default {
   flex-wrap: wrap;
   justify-content: flex-start;
 }
+
 .mycard {
-  flex: 0 0 300px; /* 设置卡片宽度 */
+  flex: 0 0 300px;
+  /* 设置卡片宽度 */
+}
+
+.dashcard {
+  width: 100px;
+  height: 160px;
 }
 </style>

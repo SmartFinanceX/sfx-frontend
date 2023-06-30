@@ -1,20 +1,29 @@
 <template>
-    <v-container v-on:click="click" class="mycard">
+    <v-container class="mycard">
         <!-- <router-link to="{name: 'Dashboard' , params: { ticker:$ticker }}"> -->
         <v-card>
             <!-- 卡片的头部 -->
-            <v-card-title> {{ stockName }} </v-card-title>
-            <v-card-subtitle>
-                {{ ticker }}
-            </v-card-subtitle>
-            <!-- 分割线 -->
-            <v-divider />
-            <!--卡片的中部-->
-            <v-card-text>
-                <li>所属行业：{{ field }}</li>
-                <li>建立日期：{{ listDate }}</li>
-                <li>简介：{{ message }}</li>
-            </v-card-text>
+            <v-container v-on:click="click">
+                <v-card-title> {{ stockName }} </v-card-title>
+                <v-card-subtitle>
+                    {{ ticker }}
+                </v-card-subtitle>
+                <!-- 分割线 -->
+                <v-divider />
+                <!--卡片的中部-->
+                <v-card-text>
+                    <li>所属行业：{{ field }}</li>
+                    <li>建立日期：{{ listDate }}</li>
+                    <li>简介：{{ message }}</li>
+                </v-card-text>
+            </v-container>
+
+
+            <v-card-actions>
+                <v-btn v-on:click="addticker" v-if="!selcted" prepend-icon="mdi-paperclip-plus" variant="text"> 添加选股
+                </v-btn>
+                <v-btn v-on:click="rmticker" v-else prepend-icon="mdi-paperclip-remove" variant="text"> 取消选股 </v-btn>
+            </v-card-actions>
         </v-card>
         <!-- </router-link> -->
     </v-container>
@@ -34,10 +43,24 @@ export default {
         loadedfield: String,
         loadedlistDate: String,
         loadedmsg: String
+    }, created() {
+        // 从本地存储中加载数据
+        const watchlists = JSON.parse(localStorage.getItem('watchlists'))
+        if (watchlists) {
+            this.watchlists = watchlists
+            this.selcted = watchlists.indexOf(this.ticker) !== -1
+        }
     },
     watch: {
         ticker() {
             this.getInformation()
+        },
+        watchlists: {
+            handler(newItems) {
+                localStorage.setItem('watchlists', JSON.stringify(newItems))
+                this.$emit("fresh")
+            },
+            deep: true
         }
     },
     data: () => ({
@@ -46,8 +69,17 @@ export default {
         loading: false,
         field: "",
         listDate: "",
+        watchlists: [],
+        selcted: false
     }),
     methods: {
+        getwatchlist() {
+            const watchlists = JSON.parse(localStorage.getItem('watchlists'))
+            console.log(watchlists)
+            if (watchlists) {
+                this.watchlists = watchlists
+            }
+        },
         getInformation() {
             if (this.loaded) {
                 this.stockName = this.loadedstockName
@@ -61,7 +93,7 @@ export default {
             this.$http.get(url).then((res) => {
                 // console.log(res);
                 if (res.data.data == null) {
-                    alert(`抱歉，没有找到代码：${this.ticker}的相关信息`);
+                    //alert(`抱歉，没有找到代码：${this.ticker}的相关信息`);
                 }
                 this.stockName = res.data.data.stockName;
                 this.field = res.data.data.industryClass;
@@ -76,10 +108,25 @@ export default {
                 path: "/inc/" + this.ticker,
             });
         },
+        addticker() {
+            this.selcted = true;
+            this.getwatchlist();
+            this.watchlists.push(this.ticker)
+            console.log(this.watchlists)
+        },
+        rmticker() {
+            this.selcted = false;
+            var index = this.watchlists.indexOf(this.ticker)
+            while (index != -1) {
+                this.watchlists.splice(index, 1)
+                index = this.watchlists.indexOf(this.ticker)
+            }
+        },
         // click() {
         //   console.log("[debug] 进行页面跳转" + this.ticker);
         //   router.push({ name: "Dashboard", params: { ticker: this.ticker } });
         // },
+
     },
     mounted() {
         this.getInformation();
