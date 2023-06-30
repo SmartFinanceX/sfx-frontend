@@ -4,7 +4,7 @@
         <SearchBar :way="way" :msg="msg" @search="search">
         </SearchBar>
         <v-container v-show="searched">
-            <v-chip prepend-icon="mdi-bulletin-board" variant="text">
+            <v-chip href="#result" prepend-icon="mdi-bulletin-board" variant="text">
                 查询到{{ cnt }}条结果
             </v-chip>
             <v-divider></v-divider>

@@ -1,60 +1,36 @@
 <template>
   <v-card class="mx-auto" max-width="600">
-   <v-list v-model:opened="open">
-        <v-list-item prepend-icon="mdi-home" title="管理者 先生，您好。"></v-list-item>
+    <v-list v-model:opened="open">
+      <v-list-item prepend-icon="mdi-home" title="资讯"></v-list-item>
 
-        <v-list-group value="今日新闻">
+      <v-list-group value="今日新闻">
+        <template v-slot:activator="{ props }">
+          <v-list-item v-bind="props" prepend-icon="mdi-account-circle" title="金融日报栏"></v-list-item>
+        </template>
+
+        <v-list-group value="Admin">
           <template v-slot:activator="{ props }">
-            <v-list-item
-              v-bind="props"
-              prepend-icon="mdi-account-circle"
-              title="金融日报栏"
-            ></v-list-item>
+            <v-list-item variant="text" v-bind="props" title="今日精选"></v-list-item>
           </template>
 
-          <v-list-group value="Admin">
-            <template v-slot:activator="{ props }">
-              <v-list-item
-                v-bind="props"
-                title="今日精选"
-              ></v-list-item>
-            </template>
-
-            <v-list-item
-              v-for="([title, icon], i) in admins"
-              :key="i"
-              :title="title"
-              :prepend-icon="icon"
-              :value="title"
-            @click="turn2(i)"
-            v-on:mouseover="changepicture1(i)" v-on:mouseout="returnpicture()"></v-list-item>
-          </v-list-group>
-
-          <v-list-group value="Actions">
-            <template v-slot:activator="{ props }">
-              <v-list-item
-                v-bind="props"
-                title="其他新闻"
-              ></v-list-item>
-            </template>
-
-            <v-list-item
-              v-for="([title, icon], i) in cruds"
-              :key="i"
-              :value="title"
-              :title="title"
-              @click="turn3(i)"
-               v-on:mouseover="changepicture1(5)" v-on:mouseout="returnpicture()"
-              :prepend-icon="icon"
-            ></v-list-item>
-          </v-list-group>
+          <v-list-item v-for="([title, icon], i) in admins" :key="i" :title="title" :prepend-icon="icon" :value="title"
+            @click="turn2(i)" v-on:mouseover="changepicture1(i)" v-on:mouseout="returnpicture()"></v-list-item>
         </v-list-group>
-      </v-list>
+
+        <v-list-group value="Actions">
+          <template v-slot:activator="{ props }">
+            <v-list-item v-bind="props" title="其他新闻"></v-list-item>
+          </template>
+
+          <v-list-item v-for="([title, icon], i) in cruds" :key="i" :value="title" :title="title" @click="turn3(i)"
+            v-on:mouseover="changepicture1(5)" v-on:mouseout="returnpicture()" :prepend-icon="icon"></v-list-item>
+        </v-list-group>
+      </v-list-group>
+    </v-list>
   </v-card>
   <v-container class="picture-margin">
     <img v-bind:src="hovernow" class="picture">
   </v-container>
-
 </template>
 
 <script>
@@ -87,80 +63,79 @@ export default {
     hovernow: 'https://th.bing.com/th/id/OIP.BUa-cBK7ZNSAJb6UjFulzQHaE7?w=252&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7',
 
   }),
-  methods:{
+  methods: {
     turn2(i) {
       switch (i) {
         case 0:
-          window.location.href = 'https://finance.eastmoney.com/a/202306302766699355.html';
+          window.open('https://finance.eastmoney.com/a/202306302766699355.html');
           break;
         case 1:
-          window.location.href = 'https://finance.eastmoney.com/a/202306302766641745.html';
+          window.open('https://finance.eastmoney.com/a/202306302766641745.html');
           break;
         case 2:
-          window.location.href = 'https://finance.eastmoney.com/a/202306302766746119.html';
+          window.open('https://finance.eastmoney.com/a/202306302766746119.html');
           break;
         case 3:
-          window.location.href = 'https://www.msn.com/en-us/money/companies/lordstown-motors-receives-nasdaq-delisting-notice-after-filing-for-bankruptcy/ar-AA1deMCj?cvid=a156dc45b23b419ebd6bf4e4b03a4104&ei=30';
+          window.open('https://www.msn.com/en-us/money/companies/lordstown-motors-receives-nasdaq-delisting-notice-after-filing-for-bankruptcy/ar-AA1deMCj?cvid=a156dc45b23b419ebd6bf4e4b03a4104&ei=30');
           break;
         case 4:
-          window.location.href = 'https://www.msn.com/en-us/money/news/tesla-nike-sigilon-therapeutics-among-top-trending-stocks-today/ar-AA1detDr?cvid=a156dc45b23b419ebd6bf4e4b03a4104&ei=77';
+          window.open('https://www.msn.com/en-us/money/news/tesla-nike-sigilon-therapeutics-among-top-trending-stocks-today/ar-AA1detDr?cvid=a156dc45b23b419ebd6bf4e4b03a4104&ei=77');
           break;
       }
     },
-    turn3(i)
-    {
+    turn3(i) {
       switch (i) {
         case 0:
-          window.location.href = 'https://finance.eastmoney.com/a/202306302766714374.html';
+          window.open('https://finance.eastmoney.com/a/202306302766714374.html');
           break;
         case 1:
-          window.location.href = 'https://finance.eastmoney.com/a/202306302766641745.html';
+          window.open('https://finance.eastmoney.com/a/202306302766641745.html');
           break;
         default:
-          window.location.href = 'https://ys.mihoyo.com/?utm_source=adbdpz&from_channel=adbdpz#/';
+          window.open('https://www.msn.cn/zh-cn?ocid=BHEA000');
           break;
       }
     },
     changepicture1(i) {
-       switch (i) {
+      switch (i) {
         case 0:
-           this.hovernow = '/src/assets/1.png';
-           this.$forceUpdate();
+          this.hovernow = '/src/assets/1.png';
+          this.$forceUpdate();
           break;
         case 1:
-         this.hovernow = '/src/assets/2.png';
+          this.hovernow = '/src/assets/2.png';
           this.$forceUpdate();
           break;
         case 2:
-           this.hovernow = '/src/assets/3.png';
+          this.hovernow = '/src/assets/3.png';
           break;
         case 3:
-           this.hovernow = '/src/assets/4.png';
+          this.hovernow = '/src/assets/4.png';
           break;
         case 4:
-           this.hovernow = '/src/assets/5.png';
-           break;
-         case 5:
-          this.hovernow='/src/assets/6.png'
-       }
-    },
-      returnpicture()
-      {
-        this.hovernow = this.hoverbefore;
-       this.$forceUpdate();
+          this.hovernow = '/src/assets/5.png';
+          break;
+        case 5:
+          this.hovernow = '/src/assets/6.png'
       }
+    },
+    returnpicture() {
+      this.hovernow = this.hoverbefore;
+      this.$forceUpdate();
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.picture-margin{
+.picture-margin {
   margin-left: 33%;
   margin-top: 93px;
   margin-bottom: 10px;
 
 }
-.picture{
+
+.picture {
   transform: scale(1.2);
 }
 </style>
