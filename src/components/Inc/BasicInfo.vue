@@ -38,7 +38,7 @@ export default {
       // console.log(url);
       let that = this;
       this.$http.get(url).then((res) => {
-        console.log(res);
+        // console.log(res);
         that.data.value = res.data.data.finanace_data.reverse();
         //父组件调用子组件的方法
         // that.$refs.myChart.draw(this.data);
@@ -49,7 +49,7 @@ export default {
       this.$http
         .get(url)
         .then((res) => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           this.infor = res.data.data;
           this.infor.listDate = res.data.data.listDate.split("T")[0];
         })

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="main" style="width: 800px; height: 400px"></div>
+    <div id="main" style="width: 1000px; height: 500px"></div>
   </div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     drawK(res) {
-      var chartDom = document.getElementById("main2");
+      var chartDom = document.getElementById("main");
       var myChart = echarts.init(chartDom);
       //需要提供一个div 给他宽高框框才可以画图，
       const upColor = "#ec0000";
