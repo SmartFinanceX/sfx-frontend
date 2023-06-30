@@ -21,10 +21,10 @@ export default {
   methods: {
     test() {
       this.$http
-        .post("http://124.222.191.199:9000/stock/calculate_scores", this.data)
+        .post("http://124.222.191.199:9000/stock/live/000001", this.data)
         .then((response) => {
           // 请求成功时的处理逻辑
-          //   console.log(response);
+          console.log(response);
         });
     },
   },

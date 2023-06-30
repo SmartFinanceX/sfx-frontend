@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     givedata() {
-      console.log(this.infor);
+      // console.log(this.infor);
       this.fullName = this.infor.fullName;
       this.field = this.infor.industryClass;
       this.date = this.infor.listDate;

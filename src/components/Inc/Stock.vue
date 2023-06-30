@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div class="kchart"><k-line :KData="data"></k-line></div>
+    <div class="kchart"><k-line :KData="data" :ticker="ticker"></k-line></div>
   </v-container>
 </template>
 <script setup></script>

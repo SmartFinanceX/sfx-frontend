@@ -8,13 +8,19 @@
 import * as echarts from "echarts";
 export default {
   props: {
+    ticker: {
+      type: String,
+      required: true,
+    },
     KData: {
       type: Array,
       required: true,
     },
   },
   data() {
-    return {};
+    return {
+      stockName: "",
+    };
   },
   watch: {
     KData: {
@@ -26,7 +32,17 @@ export default {
       deep: true,
     },
   },
+  created() {
+    this.search();
+  },
   methods: {
+    search() {
+      const url = `http://124.222.191.199:9000/inc/_ticker/${this.ticker}`;
+      this.$http.get(url).then((res) => {
+        // console.log(res.data);
+        this.stockName = res.data.data.stockName;
+      });
+    },
     drawK(res) {
       var chartDom = document.getElementById("main");
       var myChart = echarts.init(chartDom);
@@ -88,7 +104,7 @@ export default {
       myChart.setOption({
         //这里需要使用myChart.setOption(option);
         title: {
-          text: "平安银行（sz000001）",
+          text: `${this.stockName}(${this.ticker})`,
           left: 0,
         },
         tooltip: {

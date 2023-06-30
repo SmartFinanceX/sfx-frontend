@@ -33,13 +33,13 @@ export default {
   },
   methods: {
     getdata(category) {
-      // console.log(this);
       const url = `http://124.222.191.199:9000/inc/_fnc/${this.ticker}/${category}`;
       // console.log(url);
       let that = this;
       this.$http.get(url).then((res) => {
         // console.log(res);
-        that.data.value = res.data.data.finanace_data.reverse();
+        res.data.data.finanace_data = res.data.data.finanace_data.reverse();
+        that.data.value = res.data.data.finanace_data;
         //父组件调用子组件的方法
         // that.$refs.myChart.draw(this.data);
       });

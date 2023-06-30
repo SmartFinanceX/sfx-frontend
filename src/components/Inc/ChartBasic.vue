@@ -1,10 +1,6 @@
 <template>
   <div class="frame">
-    <div
-      class="mychart"
-      id="mainchart"
-      style="width: 750px; height: 400px"
-    ></div>
+    <div class="mychart" id="main" style="width: 750px; height: 400px"></div>
   </div>
 </template>
 <script>
@@ -19,42 +15,45 @@ export default {
   data() {
     return {
       name: "",
+      data: {},
     };
   },
   watch: {
     chartdata: {
       handler(newdata, olddata) {
-        console.debug("Newdata");
+        console.debug("newdata");
         // console.log(newdata);
+        // this.convert(this.category);
         this.draw(newdata);
       },
       deep: true,
     },
   },
   methods: {
+    // convert(category) {
+    //   if (category == 1) {
+    //     this.name = "净利润";
+    //   } else if (category == 2) {
+    //     this.name = "总收入";
+    //   } else if (category == 3) {
+    //     this.name = "总成本";
+    //   } else if (category == 4) {
+    //     this.name = "归母净利润";
+    //   } else {
+    //     this.name = "扣非净利润";
+    //   }
+    // },
     //画公司价值图
     draw(data) {
-      // let data = data1.finanace_data.reverse();
-      // let category = data1.category;
-      var chartDom = document.getElementById("mainchart");
+      // var data = data1.finanace_data;
+      console.log(data);
+      var chartDom = document.getElementById("main");
       var myChart = echarts.init(chartDom);
       var option;
 
-      // if (category == 1) {
-      //   this.name = "净利润";
-      // } else if (category == 2) {
-      //   this.name = "总收入";
-      // } else if (category == 3) {
-      //   this.name = "总成本";
-      // } else if (category == 4) {
-      //   this.name = "归母净利润";
-      // } else {
-      //   this.name = "扣非净利润";
-      // }
-
       option = {
         title: {
-          // text: `公司${this.name}变化`,
+          text: `公司${this.name}变化`,
         },
         tooltip: {
           trigger: "axis",
@@ -62,9 +61,9 @@ export default {
             // 自定义tooltip内容
             var text = "";
             params.forEach(function (param) {
-              var date = param.name;
+              var name = param.name;
               var value = param.value;
-              text += date + "<br/>" + "市值：" + value * 1000000 + "<br/>";
+              text += name + "<br/>" + "市值：" + value * 1000000 + "<br/>";
             });
             return text;
           },
