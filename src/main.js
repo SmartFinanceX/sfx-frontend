@@ -10,11 +10,9 @@ import App from "./App.vue";
 // Composables
 import { createApp } from "vue";
 
-// Plugins
 import { registerPlugins } from "@/plugins";
-//axios
+axios
 import axios from "axios";
-//echarts
 import * as echarts from "echarts";
 
 const app = createApp(App);
