@@ -1,20 +1,10 @@
 <template>
   <v-container class="d-flex flex-wrap">
     <p>您的收藏</p>
-    <inc-card
-      v-if="watchlists.length"
-      @fresh="fresh"
-      v-for="watchlist in watchlists"
-      :ticker="watchlist"
-      :loaded="false"
-      class=""
-    />
+    <inc-card v-if="watchlists.length" @fresh="fresh" v-for="watchlist in watchlists" :ticker="watchlist" :loaded="false"
+      class="" />
     <v-container v-else class="w-50 aligin-center">
-      <v-card
-        title="暂无收藏股票"
-        text="去搜索或资讯逛逛吧"
-        class="mycard"
-      ></v-card>
+      <v-card title="暂无收藏股票" text="去搜索或资讯逛逛吧" class="mycard"></v-card>
     </v-container>
   </v-container>
 </template>
@@ -40,7 +30,7 @@ export default {
   methods: {
     getwatchlist() {
       const watchlists = JSON.parse(localStorage.getItem("watchlists"));
-      // console.log(watchlists)
+      // console.log("[debug] Dashboard " + watchlists)
       if (watchlists) {
         this.watchlists = watchlists;
       }
