@@ -77,6 +77,7 @@ export default {
       score: 1.892,
       data: {
         ticker: `${this.ticker}`,
+        //这里还是固定数据，要改
         category: 1,
       },
       yuce: null,
@@ -93,7 +94,9 @@ export default {
   methods: {
     getScore() {
       this.$http
-        .post("http://124.222.191.199:9000/stock/calculate_scores", this.data)
+        .get(
+          `${this.$target}/stock/calculate_scores/${this.ticker}/${this.data.category}`
+        )
         .then((res) => {
           // 请求成功时的处理逻辑
           // console.log(res);
@@ -123,9 +126,11 @@ export default {
     },
     getTrend() {
       this.$http
-        .post("http://124.222.191.199:9000/stock/predict", this.data)
+        .get(
+          `${this.$target}/stock/predict/${this.ticker}/${this.data.category}`
+        )
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           (this.yuce = res.data.r_squared),
             (this.date = res.data.future_predictions[0].date);
           this.value = res.data.future_predictions[0].value;

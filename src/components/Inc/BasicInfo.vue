@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     getdata(category) {
-      const url = `http://124.222.191.199:9000/inc/_fnc/${this.ticker}/${category}`;
+      const url = `${this.$target}/inc/_fnc/${this.ticker}/${category}`;
       // console.log(url);
       let that = this;
       this.$http.get(url).then((res) => {
@@ -45,7 +45,7 @@ export default {
       });
     },
     search() {
-      const url = `http://124.222.191.199:9000/inc/_ticker/${this.ticker}`;
+      const url = `${this.$target}/inc/_ticker/${this.ticker}`;
       this.$http
         .get(url)
         .then((res) => {

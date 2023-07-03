@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     search() {
-      const url = `http://124.222.191.199:9000/stock/k/${this.ticker}/60`;
+      const url = `${this.$target}/stock/k/${this.ticker}/60`;
       this.$http.get(url).then((res) => {
         // console.log(res.data);
         this.data = res.data;
