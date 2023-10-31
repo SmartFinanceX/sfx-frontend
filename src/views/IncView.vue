@@ -1,21 +1,11 @@
 <template>
   <v-container>
-    <v-app-bar>
-      <v-app-bar-title> {{ stockName }} {{ ticker }} </v-app-bar-title>
-      <v-btn
-        v-on:click="addticker"
-        v-if="!selcted"
-        prepend-icon="mdi-paperclip-plus"
-        variant="text"
-      >
+    <!-- <v-app-bar>
+    <v-app-bar-title> {{ stockName }} {{ ticker }} </v-app-bar-title>
+      <v-btn v-on:click="addticker" v-if="!selcted" prepend-icon="mdi-paperclip-plus" variant="text">
         添加选股
       </v-btn>
-      <v-btn
-        v-on:click="rmticker"
-        v-else
-        prepend-icon="mdi-paperclip-remove"
-        variant="text"
-      >
+      <v-btn v-on:click="rmticker" v-else prepend-icon="mdi-paperclip-remove" variant="text">
         取消选股
       </v-btn>
       <v-spacer></v-spacer>
@@ -28,11 +18,45 @@
       <router-link :to="{ name: 'Stock' }">
         <v-btn prepend-icon="mdi-thermostat" variant="text"> 实时股价 </v-btn>
       </router-link>
-    </v-app-bar>
+      <router-link :to="{ name: 'defaultTrade' }">
+        <v-btn prepend-icon="mdi-go-kart-track" variant="text"> 我的交易 </v-btn>
+      </router-link>
+    </v-app-bar> -->
+    <v-navigation-drawer class="elevation-3">
+      <v-card :title="stockName" :subtitle="ticker"></v-card>
+      <v-divider></v-divider>
+      <v-list-item>
+        <v-btn v-on:click="addticker" v-if="!selcted" prepend-icon="mdi-eye-plus" variant="text">
+          添加选股
+        </v-btn>
+        <v-btn v-on:click="rmticker" v-else prepend-icon="mdi-eye-minus" variant="text">
+          取消选股
+        </v-btn>
+      </v-list-item>
+      <v-list-item>
+        <router-link :to="{ name: 'BasicInfo' }">
+          <v-btn prepend-icon="mdi-poll" variant="text"> 数据分析 </v-btn>
+        </router-link>
+      </v-list-item>
+      <v-list-item>
+        <router-link :to="{ name: 'Predict' }">
+          <v-btn prepend-icon="mdi-sticker-text" variant="text"> 数据预测 </v-btn>
+        </router-link>
+      </v-list-item>
+      <v-list-item>
+        <router-link :to="{ name: 'Stock' }">
+          <v-btn prepend-icon="mdi-thermostat" variant="text"> 实时股价 </v-btn>
+        </router-link>
+      </v-list-item>
+      <v-list-item :to="{ name: 'Trade' }">
+        <v-btn prepend-icon="mdi-go-kart-track" variant="text"> 我的交易 </v-btn>
+      </v-list-item>
+    </v-navigation-drawer>
     <router-view :ticker="ticker"> </router-view>
   </v-container>
 </template>
-<script setup></script>
+<script setup>
+</script>
 <script>
 export default {
   props: ["ticker", "name"],
@@ -61,14 +85,14 @@ export default {
   data() {
     return {
       watchlists: [],
-      stockName: "",
+      stockName: "默认股票名",
       selcted: false,
       trigger: false,
     };
   },
   methods: {
     getInformation() {
-      const url = `${this.$target}/inc/_ticker/${this.ticker}`;
+      const url = `/api/inc/_ticker/${this.ticker}`;
       this.$http.get(url).then((res) => {
         this.stockName = res.data.data.stockName;
       });

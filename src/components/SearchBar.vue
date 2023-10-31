@@ -35,12 +35,13 @@
 <script>
 export default {
     props: {
-        msg: String,
-        way: String
+
     },
 
     data: () => ({
         loading: false,
+        way: String,
+        msg: String,
     }),
 
     methods: {

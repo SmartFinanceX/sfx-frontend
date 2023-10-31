@@ -31,7 +31,7 @@
       </v-btn>
     </router-link> -->
     <a href="https://sfx.antio2.cn">
-      <v-btn prepend-icon="mdi-file-sign" variant="text">
+      <v-btn prepend-icon="mdi-file-document-edit-outline" variant="text">
         文档
       </v-btn>
     </a>

@@ -1,13 +1,14 @@
 // Composables
 import { createRouter, createWebHistory } from "vue-router";
-
+import defaulVue from "@/layouts/default/Default.vue"
+import incRoute from './incRoute.js'
 const routes = [
   {
     path: "/",
-    component: () => import("@/layouts/default/Default.vue"),
+    component: defaulVue,
     children: [
       {
-        path: "",
+        path: "/",
         name: "Home",
         props: true,
         // route level code-splitting
@@ -36,34 +37,11 @@ const routes = [
             path: "/news",
             component: () => import("@/views/NewsView.vue"),
           },
+          incRoute,
           {
-            name: "IncInfo",
-            path: "/inc/:ticker",
-            component: () => import("@/views/IncView.vue"),
-            props: true,
-            children: [
-              {
-                name: "IncInfoHome",
-                path: "",
-                component: () => import("@/components/inc/BasicInfo.vue"),
-              },
-              {
-                name: "BasicInfo",
-                path: "basicinfo",
-                redirect: { name: "IncInfoHome" },
-                props: true,
-              },
-              {
-                name: "Predict",
-                path: "predict",
-                component: () => import("@/components/inc/Predict.vue"),
-              },
-              {
-                name: "Stock",
-                path: "stock",
-                component: () => import("@/components/inc/Stock.vue"),
-              },
-            ],
+            name: "Test",
+            path: "/test",
+            component: () => import("@/views/Test.vue"),
           },
         ],
       },

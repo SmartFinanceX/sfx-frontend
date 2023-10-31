@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     getdata(category) {
-      const url = `${this.$target}/inc/_fnc/${this.ticker}/${category}`;
+      const url = `/api/inc/_fnc/${this.ticker}/${category}`;
       // console.log(url);
       let that = this;
       this.$http.get(url).then((res) => {
@@ -71,14 +71,17 @@ export default {
   margin-left: 75px;
   margin-bottom: 20px;
 }
+
 .botton {
   /* text-align: center; */
   margin: 0 5px;
 }
+
 .chart {
   display: inline-block;
   vertical-align: top;
 }
+
 .infor {
   display: inline-block;
   vertical-align: top;
