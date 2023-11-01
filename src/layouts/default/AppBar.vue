@@ -1,6 +1,6 @@
 <!-- 整个网页的bar -->
 <template>
-  <v-app-bar flat>
+  <v-app-bar flat class="elevation-1">
     <v-app-bar-title>
       <router-link to="/">
         <v-btn prepend-icon="mdi-finance" variant="text">
