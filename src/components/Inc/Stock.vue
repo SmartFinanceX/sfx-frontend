@@ -1,15 +1,18 @@
 <template>
   <v-container>
+    <div class="price"><timely-price></timely-price></div>
     <div class="kchart"><k-line :KData="data" :ticker="ticker"></k-line></div>
   </v-container>
 </template>
 <script setup></script>
 <script>
 import KLine from "@/components/Inc/KLine.vue";
+import TimelyPrice from "@/components/Inc/TimelyPrice.vue";
 export default {
   props: ["ticker"],
   components: {
     KLine,
+    TimelyPrice,
   },
   data() {
     return {
