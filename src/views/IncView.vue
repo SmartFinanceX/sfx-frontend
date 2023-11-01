@@ -26,10 +26,20 @@
       <v-card :title="stockName" :subtitle="ticker"></v-card>
       <v-divider></v-divider>
       <v-list-item>
-        <v-btn v-on:click="addticker" v-if="!selcted" prepend-icon="mdi-eye-plus" variant="text">
+        <v-btn
+          v-on:click="addticker"
+          v-if="!selcted"
+          prepend-icon="mdi-eye-plus"
+          variant="text"
+        >
           添加选股
         </v-btn>
-        <v-btn v-on:click="rmticker" v-else prepend-icon="mdi-eye-minus" variant="text">
+        <v-btn
+          v-on:click="rmticker"
+          v-else
+          prepend-icon="mdi-eye-minus"
+          variant="text"
+        >
           取消选股
         </v-btn>
       </v-list-item>
@@ -40,7 +50,9 @@
       </v-list-item>
       <v-list-item>
         <router-link :to="{ name: 'Predict' }">
-          <v-btn prepend-icon="mdi-sticker-text" variant="text"> 数据预测 </v-btn>
+          <v-btn prepend-icon="mdi-sticker-text" variant="text">
+            数据预测
+          </v-btn>
         </router-link>
       </v-list-item>
       <v-list-item>
@@ -48,15 +60,18 @@
           <v-btn prepend-icon="mdi-thermostat" variant="text"> 实时股价 </v-btn>
         </router-link>
       </v-list-item>
-      <v-list-item :to="{ name: 'Trade' }">
-        <v-btn prepend-icon="mdi-go-kart-track" variant="text"> 我的交易 </v-btn>
+      <v-list-item>
+        <router-link :to="{ name: 'Trade' }">
+          <v-btn prepend-icon="mdi-go-kart-track" variant="text">
+            我的交易
+          </v-btn>
+        </router-link>
       </v-list-item>
     </v-navigation-drawer>
     <router-view :ticker="ticker"> </router-view>
   </v-container>
 </template>
-<script setup>
-</script>
+<script setup></script>
 <script>
 export default {
   props: ["ticker", "name"],
