@@ -18,10 +18,20 @@
         </v-card-text>
       </v-container>
       <v-card-actions>
-        <v-btn v-on:click="addticker" v-if="!selcted" prepend-icon="mdi-paperclip-plus" variant="text">
+        <v-btn
+          v-on:click="addticker"
+          v-if="!selcted"
+          prepend-icon="mdi-paperclip-plus"
+          variant="text"
+        >
           添加选股
         </v-btn>
-        <v-btn v-on:click="rmticker" v-else prepend-icon="mdi-paperclip-remove" variant="text">
+        <v-btn
+          v-on:click="rmticker"
+          v-else
+          prepend-icon="mdi-paperclip-remove"
+          variant="text"
+        >
           取消选股
         </v-btn>
       </v-card-actions>
@@ -70,7 +80,7 @@ export default {
     },
     selcted(newstatus) {
       // console.log("[debug] " + this.ticker + newstatus)
-    }
+    },
   },
   data: () => ({
     stockName: "",

@@ -80,13 +80,13 @@ export default {
 .chart {
   display: inline-block;
   vertical-align: top;
-  width: 70%;
+  width: 67%;
 }
 
 .infor {
   display: inline-block;
   vertical-align: top;
   margin-top: 30px;
-  width: 30%;
+  width: 33%;
 }
 </style>

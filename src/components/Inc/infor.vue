@@ -1,18 +1,43 @@
 <template>
-  <div class="infor">
-    <div class="head">
-      <img class="image" src="../../images/公司.png" />
-      <span class="introduce"><b>公司简介</b></span>
-    </div>
-    <div class="middle">
-      <div class="name content">公司： {{ fullName }}</div>
-      <div class="= content">代码： {{ ticker }}</div>
-      <div class="field content">所属行业： {{ field }}</div>
-      <div class="time content">建立日期： {{ date }}</div>
-    </div>
-    <div class="bottom">
-      <span>简介：{{ message }}</span>
-    </div>
+  <div>
+    <v-list lines="one">
+      <v-list-item class="header"
+        ><v-icon icon="mdi-city"></v-icon> 公司简介</v-list-item
+      >
+
+      <v-list-item>
+        <v-list-item>
+          <v-icon icon="mdi-domain"></v-icon>
+
+          公司名称： {{ fullName }}</v-list-item
+        >
+      </v-list-item>
+      <v-list-item>
+        <v-list-item
+          ><v-icon icon="mdi-trending-up"></v-icon>股票代码：
+          {{ ticker }}</v-list-item
+        >
+      </v-list-item>
+      <v-list-item>
+        <v-list-item
+          ><v-icon icon="mdi-factory"></v-icon> 所属行业：{{
+            field
+          }}</v-list-item
+        >
+      </v-list-item>
+      <v-list-item>
+        <v-list-item
+          ><v-icon icon="mdi-update"></v-icon> 建立日期：{{ date }}</v-list-item
+        >
+      </v-list-item>
+      <v-list-item>
+        <v-list-item
+          ><v-icon icon="mdi-briefcase-account"></v-icon> 简要介绍：{{
+            message
+          }}</v-list-item
+        >
+      </v-list-item>
+    </v-list>
   </div>
 </template>
 
@@ -60,7 +85,7 @@ export default {
 .head {
   margin-bottom: 20px;
 }
-.infor {
+.infor1 {
   display: inline-block;
   width: 100%;
   /* height: 100%; */
@@ -82,5 +107,9 @@ export default {
 }
 .bottom {
   margin-top: 15px;
+}
+.header {
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 </style>
