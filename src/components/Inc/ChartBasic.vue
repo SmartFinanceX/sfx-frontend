@@ -97,8 +97,8 @@ export default {
 
 <style scoped>
 .frame {
-  width: 800px;
-  height: 400px;
+  width: 100%;
+  /* height: 400px; */
 }
 /* .mychart {
     display: inline-block;

@@ -62,8 +62,8 @@ export default {
 }
 .infor {
   display: inline-block;
-  width: 300px;
-  height: 400px;
+  width: 100%;
+  /* height: 100%; */
 }
 .image {
   vertical-align: top;
