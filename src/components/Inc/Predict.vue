@@ -3,42 +3,30 @@
     <v-card class="mycard">
       <v-card-title>综合评分：</v-card-title>
       <div class="container">
-        <span class="in"
-          ><b>{{ score }}</b></span
-        >
+        <span class="in"><b>{{ score }}</b></span>
       </div>
       <v-card-text>{{ message[i] }}</v-card-text>
     </v-card>
     <v-card class="mycard">
       <v-card-title>预测值：</v-card-title>
       <div class="container">
-        <span class="in"
-          ><b
-            >预计在{{ date }}，以{{ yuce }}的拟合程度，该公司的{{
-              name
-            }}将会达到{{ value }}</b
-          ></span
-        >
+        <span class="in"><b>预计在{{ date }}，以{{ yuce }}的拟合程度，该公司的{{
+          name
+        }}将会达到{{ value }}</b></span>
       </div>
-      <v-card-text
-        >根据该公司现有数据，我们得到该公司目前的预测值，进而得到波动率预测和趋势预测</v-card-text
-      >
+      <v-card-text>根据该公司现有数据，我们得到该公司目前的预测值，进而得到波动率预测和趋势预测</v-card-text>
     </v-card>
     <v-card class="mycard">
       <v-card-title>波动率预测：</v-card-title>
       <div class="container">
-        <span class="in"
-          ><b>{{ bodong[j] }}</b></span
-        >
+        <span class="in"><b>{{ bodong[j] }}</b></span>
       </div>
       <v-card-text>{{ analysis[j] }}</v-card-text>
     </v-card>
     <v-card class="mycard">
       <v-card-title>趋势预测：</v-card-title>
       <div class="container">
-        <span class="in"
-          ><b>{{ qushi[k] }}</b></span
-        >
+        <span class="in"><b>{{ qushi[k] }}</b></span>
       </div>
       <v-card-text>{{ trend[k] }}</v-card-text>
     </v-card>
@@ -158,10 +146,12 @@ export default {
   /* 可选：设置容器的宽高 */
   width: 100%;
 }
+
 .mycard {
   /* flex: 0 0 300px; */
   margin: 20px;
 }
+
 .in {
   font-size: 700;
   text-align: center;

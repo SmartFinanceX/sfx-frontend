@@ -34,10 +34,10 @@ export default {
   methods: {
     getdata(category) {
       const url = `/api/inc/_fnc/${this.ticker}/${category}`;
-      // console.log(url);
+      console.log(url);
       let that = this;
       this.$http.get(url).then((res) => {
-        // console.log(res);
+        console.log(res);
         res.data.data.finanace_data = res.data.data.finanace_data.reverse();
         that.data.value = res.data.data.finanace_data;
         //父组件调用子组件的方法
