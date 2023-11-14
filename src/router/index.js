@@ -1,7 +1,7 @@
 // Composables
 import { createRouter, createWebHistory } from "vue-router";
-import defaulVue from "@/layouts/default/Default.vue"
-import incRoute from './incRoute.js'
+import defaulVue from "@/layouts/default/Default.vue";
+import incRoute from "./incRoute.js";
 const routes = [
   {
     path: "/",
@@ -42,6 +42,11 @@ const routes = [
             name: "Test",
             path: "/test",
             component: () => import("@/views/Test.vue"),
+          },
+          {
+            name: "Collect",
+            path: "/collect",
+            component: () => import("@/views/Collect.vue"),
           },
         ],
       },
