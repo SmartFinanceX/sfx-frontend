@@ -67,6 +67,13 @@
           </v-btn>
         </router-link>
       </v-list-item>
+      <v-list-item>
+        <router-link :to="{ name: 'Collect' }">
+          <v-btn prepend-icon="mdi-rocket-launch-outline" variant="text">
+            收藏列表
+          </v-btn>
+        </router-link>
+      </v-list-item>
     </v-navigation-drawer>
     <router-view :ticker="ticker"> </router-view>
   </v-container>

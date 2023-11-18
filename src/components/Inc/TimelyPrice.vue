@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div id="main" style="max-width: 1000px; height: 500px"></div>
+    <!-- <div id="main" style="max-width: 1000px; height: calc(100vh - 125px)"></div> -->
+    <div id="main" style="max-width: 1000px; height: 450px"></div>
   </div>
 </template>
 

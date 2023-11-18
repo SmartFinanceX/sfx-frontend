@@ -160,7 +160,7 @@ export default {
         tag: 1,
       },
       {
-        code: "002584",
+        code: "002238",
         name: "天威视讯",
         price: "12.82",
         range: "+10.82%",
