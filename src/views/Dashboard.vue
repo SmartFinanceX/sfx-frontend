@@ -1,4 +1,5 @@
 <!-- 网站首页 -->
+<!-- 收藏逻辑还有点问题，selected需要每个进行分配 -->
 <template>
   <v-card-title style="font-weight: bold">市场</v-card-title>
   <v-container class="d-flex flex-wrap">
@@ -78,10 +79,20 @@
               </div>
             </v-list-item>
             <v-btn
+              v-if="this.watchlists.indexOf(stock.code) == -1 ? 1 : 0"
+              v-on:click="addticker(stock.code)"
               style="background-color: rgb(221, 218, 218)"
               icon="mdi-star-outline"
               variant="text"
               title="添加收藏"
+            ></v-btn>
+            <v-btn
+              v-else
+              v-on:click="rmticker(stock.code)"
+              style="background-color: rgb(221, 218, 218)"
+              icon="mdi-star-remove-outline"
+              variant="text"
+              title="取消收藏"
             ></v-btn>
           </template>
         </v-list-item>
@@ -98,10 +109,27 @@ import TimelyChart from "@/components/Inc/TimelyPrice.vue";
 export default {
   name: "Dashboard",
 
-  methods: {},
   components: {
     TimelyChart,
     // IncCard: () => import("@/components/IncCard.vue"),
+  },
+  created() {
+    // 从本地存储中加载数据
+    const watchlists = JSON.parse(localStorage.getItem("watchlists"));
+    if (watchlists) {
+      this.watchlists = watchlists;
+      // this.selcted = watchlists.indexOf(this.ticker) !== -1;
+    }
+  },
+  watch: {
+    // 监听 items 数组的变化，并将其保存到本地存储中
+    watchlists: {
+      handler(newItems) {
+        localStorage.setItem("watchlists", JSON.stringify(newItems));
+        this.trigger = !this.trigger;
+      },
+      deep: true,
+    },
   },
   data: () => ({
     items: [
@@ -137,51 +165,20 @@ export default {
         tag: -1,
       },
     ],
-    stocks: [
-      {
-        code: "600519",
-        name: "贵州茅台",
-        price: "1775.84",
-        range: "0.00%",
-        tag: 0,
-      },
-      {
-        code: "600520",
-        name: "文一科技",
-        price: "34.01",
-        range: "+9.99%",
-        tag: 1,
-      },
-      {
-        code: "600507",
-        name: "方大特钢",
-        price: "4.79",
-        range: "+0.21%",
-        tag: 1,
-      },
-      {
-        code: "002238",
-        name: "天威视讯",
-        price: "12.82",
-        range: "+10.82%",
-        tag: 1,
-      },
-      {
-        code: "300364",
-        name: "中文在线",
-        price: "25.40",
-        range: "-9.19%",
-        tag: -1,
-      },
-      {
-        code: "002584",
-        name: "西陇科学",
-        price: "8.00",
-        range: "+10.04%",
-        tag: 1,
-      },
-    ],
+    stocks: [],
+    // stocks: [//数据格式
+    //   {
+    //     code: "600519",
+    //     name: "贵州茅台",
+    //     price: "1775.84",
+    //     range: "0.00%",
+    //     tag: 0,
+    //   },
+    // ]
+
     icon: ["mdi-trending-down", "mdi-trending-neutral", "mdi-trending-up"],
+    watchlists: [],
+    trigger: false,
   }),
   methods: {
     click(ticker) {
@@ -189,8 +186,57 @@ export default {
         path: "/inc/" + ticker,
       });
     },
+    getLonghubang() {
+      const url = `http://api.mairui.club/hilh/mrxq/e6d685222334fd1d95`;
+      this.$http.get(url).then((res) => {
+        // console.log(res);
+        let need = [];
+        //提取想要的数据
+        need[0] = res.data.dpl7[0];
+        need[1] = res.data.dpl7[1];
+        need[2] = res.data.zpl7[0];
+        need[3] = res.data.zpl7[1];
+        need[4] = res.data.h20[0];
+        need[5] = res.data.h20[1];
+        // console.log(need);
+        for (let i = 0; i < 6; i++) {
+          let temp = 0;
+          //处理涨跌标志
+          if (parseFloat(need[i].val) < 0) {
+            temp = -1;
+            need[i].val = need[i].val + "%";
+          } else if (parseFloat(need[i].val) > 0) {
+            temp = 1;
+            need[i].val = "+" + need[i].val + "%";
+          }
+
+          this.stocks.push({
+            code: need[i].dm,
+            name: need[i].mc,
+            price: need[i].c,
+            range: need[i].val,
+            tag: temp,
+          });
+        }
+      });
+    },
+    addticker(ticker) {
+      // this.selcted = true;
+      this.watchlists.push(ticker);
+      // console.log(this.watchlists);
+    },
+    rmticker(ticker) {
+      // this.selcted = false;
+      const index = this.watchlists.indexOf(ticker);
+      if (index != -1) {
+        this.watchlists.splice(index, 1);
+      }
+    },
   },
   computed: {},
+  mounted() {
+    this.getLonghubang();
+  },
 };
 </script>
 

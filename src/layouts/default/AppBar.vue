@@ -1,5 +1,11 @@
 <!-- 整个网页的bar -->
 <template>
+  <!-- <v-app-bar
+    flat
+    class="elevation-1"
+    scroll-behavior="fade-image collapse "
+    image="@/images/bg1.jpg"
+  > -->
   <v-app-bar flat class="elevation-1" scroll-behavior="fade-image collapse ">
     <v-app-bar-title>
       <router-link to="/">
@@ -7,19 +13,10 @@
         SmartFinanceX
       </router-link>
     </v-app-bar-title>
+    <div style="min-width: 600px; display: flex"><search-bar></search-bar></div>
     <template #append>
-      <v-sheet class="pa-7 ma-2">
-        <v-select
-          label="搜索方式"
-          v-model="way"
-          :items="['关键词', '股票代码', '资讯']"
-          variant="underlined"
-          :hide-details="true"
-        ></v-select
-      ></v-sheet>
-      <search-bar></search-bar>
       <router-link :to="{ name: 'Dashboard' }">
-        <v-btn prepend-icon="mdi-star-box" variant="text"> 选股 </v-btn>
+        <v-btn prepend-icon="mdi-home-outline" variant="text"> 首页 </v-btn>
       </router-link>
       <router-link :to="{ name: 'SearchView' }">
         <v-btn prepend-icon="mdi-cloud-search-outline" variant="text">
@@ -29,6 +26,11 @@
       <router-link :to="{ name: 'News' }">
         <v-btn prepend-icon="mdi-newspaper-variant-outline" variant="text">
           资讯
+        </v-btn>
+      </router-link>
+      <router-link :to="{ name: 'Collect' }">
+        <v-btn prepend-icon="mdi-rocket-launch-outline" variant="text">
+          收藏
         </v-btn>
       </router-link>
       <a href="https://sfx.antio2.cn">

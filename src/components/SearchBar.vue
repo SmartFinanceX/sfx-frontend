@@ -1,40 +1,38 @@
 <template>
-  <v-container class="elevation-1">
-    <v-row no-gutters>
-      <v-col cols="2">
-        <v-sheet class="pa-2 ma-2">
-          <v-select
-            label="搜索方式"
-            v-model="way"
-            :items="['关键词', '股票代码', '资讯']"
-            variant="underlined"
-            :hide-details="true"
-          ></v-select
-        ></v-sheet>
-      </v-col>
-      <v-col>
-        <v-sheet class="pa-2 ma-2">
-          <v-text-field
-            v-model="msg"
-            label="查询"
-            type="text"
-            variant="outlined"
-            class="h.50"
-          >
-            <template v-slot:append>
-              <v-btn
-                prepend-icon="mdi-map-search"
-                variant="text"
-                v-on:click="search"
-              >
-                搜索
-              </v-btn>
-            </template>
-          </v-text-field>
-        </v-sheet>
-      </v-col>
-    </v-row>
-  </v-container>
+  <!-- <v-container class="elevation-1"> -->
+  <v-row class="search">
+    <v-col cols="3">
+      <v-sheet class="pa-2 ma-2">
+        <v-select
+          v-model="way"
+          :items="['关键词', '股票代码', '资讯']"
+          variant="underlined"
+          :hide-details="true"
+        ></v-select
+      ></v-sheet>
+    </v-col>
+    <v-col>
+      <v-sheet class="pa-2 ma-2">
+        <v-text-field
+          v-model="msg"
+          label="查询"
+          type="text"
+          variant="outlined"
+          class="h.50"
+        >
+          <template v-slot:append>
+            <v-btn
+              prepend-icon="mdi-map-search"
+              variant="text"
+              v-on:click="search"
+            >
+              搜索
+            </v-btn>
+          </template>
+        </v-text-field>
+      </v-sheet>
+    </v-col>
+  </v-row>
 </template>
 
 <script setup>
@@ -54,7 +52,7 @@ export default {
 
   data: () => ({
     loading: false,
-    way: "关键词",
+    way: "搜索方式",
     msg: "",
   }),
 
@@ -73,3 +71,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.search {
+  margin-top: 10px;
+  opacity: 0.9;
+}
+</style>
