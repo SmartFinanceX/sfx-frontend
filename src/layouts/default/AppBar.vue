@@ -8,7 +8,7 @@
   > -->
   <v-app-bar flat class="elevation-1" scroll-behavior="fade-image collapse ">
     <v-app-bar-title>
-      <router-link to="/">
+      <router-link to="/dashboard" style="color: #000">
         <v-btn prepend-icon="mdi-finance" variant="text"> </v-btn>
         SmartFinanceX
       </router-link>
@@ -38,6 +38,9 @@
           文档
         </v-btn>
       </a>
+      <router-link :to="{ name: 'Login' }">
+        <v-btn prepend-icon="mdi-logout" variant="text"> 退出 </v-btn>
+      </router-link>
     </template>
   </v-app-bar>
 </template>

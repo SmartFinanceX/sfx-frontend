@@ -88,7 +88,7 @@ export default {
         url = `https://apis.tianapi.com/caijing/index?key=${this.key}&num=${this.num[tag]}`;
       }
       this.$http.get(url).then((res) => {
-        console.log(res);
+        // console.log(res);
         let datas = res.data.result.newslist;
         let date = "";
         let show = false;

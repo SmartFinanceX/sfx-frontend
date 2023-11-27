@@ -43,7 +43,7 @@
         >龙虎榜</v-card-title
       >
 
-      <v-list lines="one">
+      <v-list lines="one" class="overflow-auto" style="max-height: 500px">
         <!-- <v-list-header inset>龙虎榜</v-list-header> -->
         <v-list-item v-for="stock in stocks" :key="stock.code" class="recom"
           ><div class="text-h6" v-on:click="click(stock.code)">
@@ -192,14 +192,15 @@ export default {
         // console.log(res);
         let need = [];
         //提取想要的数据
-        need[0] = res.data.dpl7[0];
-        need[1] = res.data.dpl7[1];
-        need[2] = res.data.zpl7[0];
-        need[3] = res.data.zpl7[1];
-        need[4] = res.data.h20[0];
-        need[5] = res.data.h20[1];
+        need = res.data.z20;
+        // need[0] = res.data.dpl7[0];
+        // need[1] = res.data.dpl7[1];
+        // need[2] = res.data.zpl7[0];
+        // need[3] = res.data.zpl7[1];
+        // need[4] = res.data.h20[0];
+        // need[5] = res.data.h20[1];
         // console.log(need);
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < need.length; i++) {
           let temp = 0;
           //处理涨跌标志
           if (parseFloat(need[i].val) < 0) {

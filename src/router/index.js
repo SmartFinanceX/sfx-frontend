@@ -3,6 +3,13 @@ import { createRouter, createWebHistory } from "vue-router";
 import defaulVue from "@/layouts/default/Default.vue";
 import incRoute from "./incRoute.js";
 const routes = [
+  { path: "", redirect: "/login" },
+  {
+    //登录路由
+    name: "Login",
+    path: "/login",
+    component: () => import("@/views/Login.vue"),
+  },
   {
     path: "/",
     component: defaulVue,
