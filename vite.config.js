@@ -18,6 +18,11 @@ export default defineConfig({
       },
     },
   },
+  build:{
+    rollupOptions:{
+      external:['vuetify/labs/VDatePicker'],
+    },
+  },
   css: {
     loaderOptions: {
       sass: {

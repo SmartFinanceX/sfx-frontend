@@ -1,0 +1,8 @@
+{
+  "appId": "com.sfxFront.app",
+  "appName": "sfxFront",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "sfxFront",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
