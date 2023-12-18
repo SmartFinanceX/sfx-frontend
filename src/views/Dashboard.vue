@@ -187,7 +187,7 @@ export default {
       });
     },
     getLonghubang() {
-      const url = `http://api.mairui.club/hilh/mrxq/e6d685222334fd1d95`;
+      const url = `http://api.mairui.club/hilh/mrxq/${this.$mydatakey}`;
       this.$http.get(url).then((res) => {
         // console.log(res);
         let need = [];

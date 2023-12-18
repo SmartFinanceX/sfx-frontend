@@ -45,13 +45,13 @@
       </v-list-item>
       <v-list-item>
         <router-link :to="{ name: 'BasicInfo' }">
-          <v-btn prepend-icon="mdi-poll" variant="text"> 数据分析 </v-btn>
+          <v-btn prepend-icon="mdi-poll" variant="text"> 基础数据 </v-btn>
         </router-link>
       </v-list-item>
       <v-list-item>
         <router-link :to="{ name: 'Predict' }">
           <v-btn prepend-icon="mdi-sticker-text" variant="text">
-            数据预测
+            分析预测
           </v-btn>
         </router-link>
       </v-list-item>

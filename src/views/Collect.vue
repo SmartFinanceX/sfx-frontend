@@ -1,5 +1,8 @@
 <template>
-  <v-card-title>您的收藏</v-card-title>
+  <v-card-title style="font-weight: bold; margin-bottom: -8px"
+    >&emsp;<v-icon icon="mdi-rocket-launch-outline"></v-icon
+    >您的收藏</v-card-title
+  >
   <v-container class="">
     <inc-card
       v-if="watchlists.length"
@@ -73,7 +76,7 @@ export default {
 }
 
 .dashcard {
-  width: 350px;
+  width: 332px;
   height: 300px;
 }
 </style>

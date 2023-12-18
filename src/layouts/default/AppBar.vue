@@ -28,18 +28,23 @@
           资讯
         </v-btn>
       </router-link>
-      <router-link :to="{ name: 'Collect' }">
+      <!-- <router-link :to="{ name: 'Collect' }">
         <v-btn prepend-icon="mdi-rocket-launch-outline" variant="text">
           收藏
         </v-btn>
-      </router-link>
+      </router-link> -->
       <a href="https://sfx.antio2.cn">
         <v-btn prepend-icon="mdi-file-document-edit-outline" variant="text">
           文档
         </v-btn>
       </a>
-      <router-link :to="{ name: 'Login' }">
+      <!-- <router-link :to="{ name: 'Login' }">
         <v-btn prepend-icon="mdi-logout" variant="text"> 退出 </v-btn>
+      </router-link> -->
+      <router-link :to="{ name: 'AccountCenter' }">
+        <v-btn prepend-icon="mdi-account-outline" variant="text">
+          个人中心
+        </v-btn>
       </router-link>
     </template>
   </v-app-bar>
