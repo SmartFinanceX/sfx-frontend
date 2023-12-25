@@ -42,50 +42,36 @@
             </v-container>
         </v-container>
         <v-container>
-            <v-table class="elevation-2">
-                <thead class="elevation-2">
-                    <tr>
-                        <th class="text-center">
-                            成交价格
-                        </th>
-                        <th class="text-center">
-                            买入/卖出
-                        </th>
-                        <th class="text-center">
-                            交易时间
-                        </th>
-                        <th class="text-center">
-                            交易单位量
-                        </th>
-                        <th class="text-center">
-                            总手续费
-                        </th>
-                        <th class="text-center">
-                            总成交金额
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="elevation-1">
-                    <tr v-for="item in this.tradeHistory">
-                        <td>{{ item.price }}</td>
-                        <td>
-                            <span v-if="item.tp === 1">买入</span>
-                            <span v-else-if="item.tp === 2">卖出</span>
-                        </td>
+            <v-card flat>
+                <v-card-title class="d-flex align-center pe-2" style="font-weight: 900">
+                    <v-icon icon="mdi-history"></v-icon> &nbsp; 我的交易记录
 
-                        <td>{{ item.time }}</td>
-                        <td>{{ item.num }}</td>
-                        <td>{{ item.fee }}</td>
-                        <td>{{ item.totalPrice }}</td>
-                    </tr>
-                </tbody>
-            </v-table>
+                    <v-spacer></v-spacer>
+                    <v-chip prepend-icon="mdi-refresh" @click="getTradeHisroty()">刷新数据</v-chip>
+                </v-card-title>
+
+                <v-divider></v-divider>
+                <v-data-table v-model:sort-by="sortBy" :headers="headers" :items="this.tradeHistory" :search="search"
+                    :items-per-page="10" loading-text="数据加载中..." no-data-text="你还暂时没有记录交易..." items-per-page-text="每页显示数量"
+                    density="comfortable" sort-by="['num']">
+                    <template v-slot:item.ticker="{ value }">
+                        <v-chip @click="click(value)">{{ value }}</v-chip>
+                    </template>
+                    <template v-slot:item.tp="{ value }">
+                        <v-chip :color="getColor(value)">
+                            <span v-if="value === 1">买入</span>
+                            <span v-else-if="value === 2">卖出</span></v-chip>
+                    </template>
+                </v-data-table>
+            </v-card>
         </v-container>
     </v-container>
     <notify ref="notifyBar"></notify>
 </template>
 <script setup>
-import notify from "@/components/common/notify"
+import notify from "@/components/common/notify";
+import router from "@/router";
+import { VDataTable } from "vuetify/labs/components";
 import * as echarts from "echarts";
 </script>
 
@@ -104,11 +90,21 @@ export default {
     },
     data() {
         return {
+            sortBy: [{ key: 'time', order: 'desc' }],
             tradeHistory: [],
             ownNum: 0,
             totalCost: 0,
             priceCost: 0,
             recordNum: 0,
+            search: "",
+            headers: [
+                { align: "start", key: "price", title: "成交价格" },
+                { key: "tp", title: "交易类型" },
+                { key: "time", title: "交易时间" },
+                { key: "num", title: "交易单位量" },
+                { key: "fee", title: "总手续费" },
+                { key: "totalPrice", title: "总成交金额" },
+            ],
         };
     },
 
@@ -149,6 +145,7 @@ export default {
             var requestUrl = '/api/analyze/benefit/query_by_user/' + this.userId + "/" + this.ticker;
 
             this.$http.get(requestUrl).then((res) => {
+                console.log("DATA")
                 console.log(res.data)
                 if (res.data.code == "200") {
                     this.tradeHistory = res.data.data.records
@@ -164,7 +161,18 @@ export default {
                 .catch((error) => {
                     console.error("Error fetching information:", error);
                 });
-        }
+        },
+        click(ticker) {
+            router.push({
+                path: "/inc/" + ticker,
+            });
+        },
+        getColor(value) {
+            // console.log(data);
+            if (value == 1) return "red";
+            else if (value == 2) return "green";
+            else return "black";
+        },
     },
     created() {
         this.getTradeHisroty()

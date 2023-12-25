@@ -182,12 +182,8 @@ export default {
           </v-list-item>
           <v-divider></v-divider>
           <v-list-item title="预测值:">
-            <v-card-text style="text-align: center"
-              >预计在2023年10月16日，以0.86的拟合程度，公司的净利润将会达到80000000元</v-card-text
-            >
-            <v-card-subtitle
-              >基于该公司历史数据，我们得到该公司目前的预测值。</v-card-subtitle
-            >
+            <v-card-text style="text-align: center">预计在2023年10月16日，以0.86的拟合程度，公司的净利润将会达到80000000元</v-card-text>
+            <v-card-subtitle>基于该公司历史数据，我们得到该公司目前的预测值。</v-card-subtitle>
           </v-list-item>
         </v-list>
       </v-container>
@@ -200,41 +196,25 @@ export default {
 
           <div v-show="tag == 1">
             <div id="a" class="chart"></div>
-            <p
-              v-for="i in text1.length"
-              v-bind:key="i"
-              style="font-size: 0.9rem; opacity: 0.65"
-            >
+            <p v-for="i in text1.length" v-bind:key="i" style="font-size: 0.9rem; opacity: 0.65">
               {{ text1[i - 1] }}
             </p>
           </div>
           <div v-show="tag == 2">
             <div id="b" class="chart"></div>
-            <p
-              v-for="i in text2.length"
-              v-bind:key="i"
-              style="font-size: 0.9rem; opacity: 0.65"
-            >
+            <p v-for="i in text2.length" v-bind:key="i" style="font-size: 0.9rem; opacity: 0.65">
               {{ text2[i - 1] }}
             </p>
           </div>
           <div v-show="tag == 3">
             <div id="c" class="chart"></div>
-            <p
-              v-for="i in text3.length"
-              v-bind:key="i"
-              style="font-size: 0.95rem; opacity: 0.65"
-            >
+            <p v-for="i in text3.length" v-bind:key="i" style="font-size: 0.95rem; opacity: 0.65">
               {{ text3[i - 1] }}
             </p>
           </div>
           <div v-show="tag == 4">
             <div id="d" class="chart"></div>
-            <p
-              v-for="i in text4.length"
-              v-bind:key="i"
-              style="font-size: 0.9rem; opacity: 0.65"
-            >
+            <p v-for="i in text4.length" v-bind:key="i" style="font-size: 0.9rem; opacity: 0.65">
               {{ text4[i - 1] }}
             </p>
           </div>
@@ -248,11 +228,12 @@ export default {
 import Score from "@/components/Inc/Score.vue";
 import * as echarts from "echarts";
 export default {
+  props: ["ticker"],
   components: {
     Score,
   },
   data: () => ({
-    ticker: "000001",
+    // ticker: "000001",
     tab: null,
     tag: 1,
     // 依次对应四个图的数据

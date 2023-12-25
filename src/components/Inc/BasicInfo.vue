@@ -2,19 +2,13 @@
   <v-container>
     <v-sheet class="d-flex flex-wrap">
       <v-sheet class="flex-1-0 ma-2 pa-2" max-width="667">
-        <v-btn
-          v-for="n in 5"
-          v-bind:key="n"
-          @click="getdata(n)"
-          style="
+        <v-btn v-for="n in 5" v-bind:key="n" @click="getdata(n)" style="
             height: 50px;
             width: 19%;
             margin-left: 1%;
             font-weight: bold;
             font-size: large;
-          "
-          >{{ this.items[n - 1] }}</v-btn
-        >
+          ">{{ this.items[n - 1] }}</v-btn>
         <div style="width: 100%; height: 400px; margin-top: 20px">
           <my-chart :chartdata="data"></my-chart>
         </div>
@@ -31,13 +25,8 @@
               height="200px"
               cover
             ></v-img> -->
-          <v-card-text
-            class="text"
-            v-for="card in cards"
-            v-bind:key="card.title"
-            v-text="card.title"
-            @click="window(card.url)"
-          ></v-card-text>
+          <v-card-text class="text" v-for="card in cards" v-bind:key="card.title" v-text="card.title"
+            @click="window(card.url)"></v-card-text>
         </div>
       </v-sheet>
     </v-sheet>
@@ -132,6 +121,7 @@ export default {
   margin-top: -16px;
   margin-bottom: -32px;
 }
+
 .text:hover {
   color: #ff0000;
 }
