@@ -88,13 +88,15 @@ export default {
         url = `https://apis.tianapi.com/caijing/index?key=${this.key}&num=${this.num[tag]}`;
       }
       this.$http.get(url).then((res) => {
-        console.log(res);
+        // console.log(res);
         let datas = res.data.result.newslist;
         let date = "";
         let show = false;
+        let source = "中国日报财经";
         this.cards = []; //置空
 
         for (let i = 0; i < this.num[tag]; i++) {
+          if (datas[i].source != source); //澎湃财经的数据没有description;
           //左右显示的逻辑
           show = !show;
 

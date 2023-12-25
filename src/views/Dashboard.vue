@@ -42,7 +42,7 @@
         >龙虎榜</v-card-title
       >
 
-      <v-list lines="one">
+      <v-list lines="one" class="overflow-auto" style="max-height: 500px">
         <!-- <v-list-header inset>龙虎榜</v-list-header> -->
         <v-list-item v-for="stock in stocks" :key="stock.code" class="recom"
           ><div class="text-h6" v-on:click="click(stock.code)">
@@ -78,10 +78,20 @@
               </div>
             </v-list-item>
             <v-btn
+              v-if="this.watchlists.indexOf(stock.code) == -1 ? 1 : 0"
+              v-on:click="addticker(stock.code)"
               style="background-color: rgb(221, 218, 218)"
               icon="mdi-star-outline"
               variant="text"
               title="添加收藏"
+            ></v-btn>
+            <v-btn
+              v-else
+              v-on:click="rmticker(stock.code)"
+              style="background-color: rgb(221, 218, 218)"
+              icon="mdi-star-remove-outline"
+              variant="text"
+              title="取消收藏"
             ></v-btn>
           </template>
         </v-list-item>
@@ -98,14 +108,33 @@ import TimelyChart from "@/components/Inc/TimelyPrice.vue";
 export default {
   name: "Dashboard",
 
-  methods: {},
   components: {
     TimelyChart,
     // IncCard: () => import("@/components/IncCard.vue"),
   },
+  created() {
+    // 从本地存储中加载数据
+    const watchlists = JSON.parse(localStorage.getItem("watchlists"));
+    if (watchlists) {
+      this.watchlists = watchlists;
+      // this.selcted = watchlists.indexOf(this.ticker) !== -1;
+    }
+  },
+  watch: {
+    // 监听 items 数组的变化，并将其保存到本地存储中
+    watchlists: {
+      handler(newItems) {
+        localStorage.setItem("watchlists", JSON.stringify(newItems));
+        this.trigger = !this.trigger;
+      },
+      deep: true,
+    },
+  },
   data: () => ({
+    names: ["上证指数", "深证成指", "中小100", "创业板指", "沪深300"],
+    codes: ["sh000001", "sz399001", "sz399005", "sz399006", "sh000300"],
     items: [
-      // 注意这里的tag考虑的还不全面，如果是不跌不涨那么应该是黑色
+      //样例数据
       {
         name: "上证指数",
         price: "3038.97",
@@ -119,69 +148,38 @@ export default {
         tag: 0,
       },
       {
-        name: "创业板指数",
-        price: "2005.24",
-        range: "-13.15(-0.65%)",
-        tag: -1,
-      },
-      {
-        name: "USD/CNY",
+        name: "中小100",
         price: "7.29",
         range: "+0.01(+0.08%)",
         tag: 1,
       },
       {
-        name: "恒生指数",
+        name: "创业板指",
+        price: "2005.24",
+        range: "-13.15(-0.65%)",
+        tag: -1,
+      },
+      {
+        name: "沪深300",
         price: "17203.26",
         range: "-308.20(-1.76%)",
         tag: -1,
       },
     ],
-    stocks: [
-      {
-        code: "600519",
-        name: "贵州茅台",
-        price: "1775.84",
-        range: "0.00%",
-        tag: 0,
-      },
-      {
-        code: "600520",
-        name: "文一科技",
-        price: "34.01",
-        range: "+9.99%",
-        tag: 1,
-      },
-      {
-        code: "600507",
-        name: "方大特钢",
-        price: "4.79",
-        range: "+0.21%",
-        tag: 1,
-      },
-      {
-        code: "002584",
-        name: "天威视讯",
-        price: "12.82",
-        range: "+10.82%",
-        tag: 1,
-      },
-      {
-        code: "300364",
-        name: "中文在线",
-        price: "25.40",
-        range: "-9.19%",
-        tag: -1,
-      },
-      {
-        code: "002584",
-        name: "西陇科学",
-        price: "8.00",
-        range: "+10.04%",
-        tag: 1,
-      },
-    ],
+    stocks: [],
+    // stocks: [//数据格式
+    //   {
+    //     code: "600519",
+    //     name: "贵州茅台",
+    //     price: "1775.84",
+    //     range: "0.00%",
+    //     tag: 0,
+    //   },
+    // ]
+
     icon: ["mdi-trending-down", "mdi-trending-neutral", "mdi-trending-up"],
+    watchlists: [],
+    trigger: false,
   }),
   methods: {
     click(ticker) {
@@ -189,8 +187,83 @@ export default {
         path: "/inc/" + ticker,
       });
     },
+    getLonghubang() {
+      const url = `http://api.mairui.club/hilh/mrxq/${this.$mydatakey}`;
+      this.$http.get(url).then((res) => {
+        // console.log(res);
+        let need = [];
+        //提取想要的数据
+        need = res.data.z20;
+        // need[0] = res.data.dpl7[0];
+        // need[1] = res.data.dpl7[1];
+        // need[2] = res.data.zpl7[0];
+        // need[3] = res.data.zpl7[1];
+        // need[4] = res.data.h20[0];
+        // need[5] = res.data.h20[1];
+        // console.log(need);
+        for (let i = 0; i < need.length; i++) {
+          let temp = 0;
+          //处理涨跌标志
+          if (parseFloat(need[i].val) < 0) {
+            temp = -1;
+            need[i].val = need[i].val + "%";
+          } else if (parseFloat(need[i].val) > 0) {
+            temp = 1;
+            need[i].val = "+" + need[i].val + "%";
+          }
+
+          this.stocks.push({
+            code: need[i].dm,
+            name: need[i].mc,
+            price: need[i].c,
+            range: need[i].val,
+            tag: temp,
+          });
+        }
+      });
+    },
+    addticker(ticker) {
+      // this.selcted = true;
+      this.watchlists.push(ticker);
+      // console.log(this.watchlists);
+    },
+    rmticker(ticker) {
+      // this.selcted = false;
+      const index = this.watchlists.indexOf(ticker);
+      if (index != -1) {
+        this.watchlists.splice(index, 1);
+      }
+    },
+    getIndex() {
+      let i = 0;
+      for (; i < this.names.length; i++) {
+        let name = this.names[i];
+        this.$http
+          .get(
+            `http://api.mairui.club/zs/sssj/${this.codes[i]}/${this.$mydatakey}`
+          )
+          .then((res) => {
+            // console.log(res);
+            let tag;
+            if (res.data.ud > 0) tag = 1;
+            else if (res.data.ud < 0) tag = -1;
+            else tag = 0;
+            this.items.push({
+              name: name,
+              price: res.data.p,
+              range: res.data.ud + "(" + res.data.pc + "%)",
+              tag: tag,
+            });
+          });
+      }
+    },
   },
   computed: {},
+  mounted() {
+    this.getLonghubang();
+    //为了节省请求次数，暂时关闭
+    // this.getIndex();
+  },
 };
 </script>
 

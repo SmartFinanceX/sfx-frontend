@@ -1,41 +1,46 @@
 <template>
   <v-container class="mycard">
     <!-- <router-link to="{name: 'Dashboard' , params: { ticker:$ticker }}"> -->
-    <v-card>
-      <!-- 卡片的头部 -->
-      <v-container v-on:click="click">
-        <v-card-title> {{ stockName }} </v-card-title>
-        <v-card-subtitle>
-          {{ ticker }}
-        </v-card-subtitle>
-        <!-- 分割线 -->
-        <v-divider />
-        <!--卡片的中部-->
-        <v-card-text>
-          <li>所属行业：{{ field }}</li>
-          <li>建立日期：{{ listDate }}</li>
-          <li>简介：{{ message }}</li>
-        </v-card-text>
-      </v-container>
-      <v-card-actions>
-        <v-btn
-          v-on:click="addticker"
-          v-if="!selcted"
-          prepend-icon="mdi-paperclip-plus"
-          variant="text"
-        >
-          添加选股
-        </v-btn>
-        <v-btn
-          v-on:click="rmticker"
-          v-else
-          prepend-icon="mdi-paperclip-remove"
-          variant="text"
-        >
-          取消选股
-        </v-btn>
-      </v-card-actions>
-    </v-card>
+    <v-hover v-slot="{ isHovering, props }">
+      <v-card v-bind="props" :elevation="isHovering ? 18 : 6">
+        <!-- 卡片的头部 -->
+        <v-container v-on:click="click" style="margin-bottom: -16px">
+          <v-card-title> {{ stockName }} </v-card-title>
+          <v-card-subtitle>
+            <v-icon icon="mdi-trending-up"></v-icon>{{ ticker }}
+          </v-card-subtitle>
+          <!-- 分割线 -->
+          <v-divider />
+          <!--卡片的中部-->
+          <v-card-text style="margin-bottom: -16px">
+            <li><v-icon icon="mdi-factory"></v-icon>所属行业：{{ field }}</li>
+            <li><v-icon icon="mdi-update"></v-icon>建立日期：{{ listDate }}</li>
+            <li style="overflow-y: auto; height: 73px">
+              <v-icon icon="mdi-briefcase-account"></v-icon>简要介绍：{{
+                message
+              }}
+            </li>
+          </v-card-text>
+        </v-container>
+        <v-card-actions>
+          <v-btn
+            v-on:click="addticker"
+            v-if="!selcted"
+            prepend-icon="mdi-eye-plus"
+            variant="text"
+          >
+            添加选股
+          </v-btn>
+          <v-btn
+            v-on:click="rmticker"
+            v-else
+            prepend-icon="mdi-eye-minus"
+            variant="text"
+            >取消选股
+          </v-btn>
+        </v-card-actions>
+      </v-card></v-hover
+    >
     <!-- </router-link> -->
   </v-container>
 </template>

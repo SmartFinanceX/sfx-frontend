@@ -1,27 +1,41 @@
 <template>
-    <v-form class="fill-height d-flex align-center">
-        <v-container>
-            <v-col cols="12">
-
-                <v-text-field v-model="msg" label="查询公司" type="text" variant="outlined" class="h.50">
-                    <template v-slot:prepend>
-                        <v-select label="搜索方式" v-model="way" :items="['关键词', '股票代码']" variant="underlined"></v-select>
-                    </template>
-
-                    <template v-slot:append>
-                        <v-btn prepend-icon="mdi-map-search" variant="text" v-on:click="search">
-                            搜索
-                        </v-btn>
-                    </template>
-                </v-text-field>
-            </v-col>
-
-        </v-container>
-    </v-form>
+  <!-- <v-container class="elevation-1"> -->
+  <v-row class="search">
+    <v-col cols="3">
+      <v-sheet class="pa-2 ma-2">
+        <v-select
+          v-model="way"
+          :items="['关键词', '股票代码', '资讯']"
+          variant="underlined"
+          :hide-details="true"
+        ></v-select
+      ></v-sheet>
+    </v-col>
+    <v-col>
+      <v-sheet class="pa-2 ma-2">
+        <v-text-field
+          v-model="msg"
+          label="查询"
+          type="text"
+          variant="outlined"
+          class="h.50"
+        >
+          <template v-slot:append>
+            <v-btn
+              prepend-icon="mdi-map-search"
+              variant="text"
+              v-on:click="search"
+            >
+              搜索
+            </v-btn>
+          </template>
+        </v-text-field>
+      </v-sheet>
+    </v-col>
+  </v-row>
 </template>
 
 <script setup>
-
 // function clickMe() {
 //     loading.value = true
 //     message.value = 'Wait for it...'
@@ -34,28 +48,33 @@
 
 <script>
 export default {
-    props: {
+  props: {},
 
+  data: () => ({
+    loading: false,
+    way: "搜索方式",
+    msg: "",
+  }),
+
+  methods: {
+    clickMe() {
+      this.loading = true;
+      this.message = "Wait for it...";
+      setTimeout(() => {
+        this.loading = false;
+        this.message = `You've clicked me!`;
+      }, 2000);
     },
-
-    data: () => ({
-        loading: false,
-        way: String,
-        msg: String,
-    }),
-
-    methods: {
-        clickMe() {
-            this.loading = true
-            this.message = 'Wait for it...'
-            setTimeout(() => {
-                this.loading = false
-                this.message = `You've clicked me!`
-            }, 2000)
-        },
-        search() {
-            this.$emit('search', this.way, this.msg);
-        }
-    }
-}
+    search() {
+      this.$emit("search", this.way, this.msg);
+    },
+  },
+};
 </script>
+
+<style scoped>
+.search {
+  margin-top: 10px;
+  opacity: 0.9;
+}
+</style>

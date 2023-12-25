@@ -1,14 +1,19 @@
 <template>
-  <v-container class="d-flex flex-wrap">
-    <p>您的收藏</p>
+  <v-card-title style="font-weight: bold; margin-bottom: -8px"
+    >&emsp;<v-icon icon="mdi-rocket-launch-outline"></v-icon
+    >您的收藏</v-card-title
+  >
+  <v-container class="">
     <inc-card
       v-if="watchlists.length"
-      @fresh="fresh"
       v-for="watchlist in watchlists"
+      v-bind:key="watchlist.ticker"
+      class="dashcard"
+      @fresh="fresh"
       :ticker="watchlist"
       :loaded="false"
-      class=""
     />
+
     <v-container v-else class="w-50 aligin-center">
       <v-card
         title="暂无收藏股票"
@@ -71,7 +76,7 @@ export default {
 }
 
 .dashcard {
-  width: 100px;
-  height: 160px;
+  width: 332px;
+  height: 300px;
 }
 </style>
