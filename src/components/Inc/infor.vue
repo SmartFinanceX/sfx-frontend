@@ -6,36 +6,21 @@
       >
 
       <v-list-item>
-        <v-list-item>
-          <v-icon icon="mdi-domain"></v-icon>
-
-          公司名称： {{ fullName }}</v-list-item
-        >
+        <v-icon icon="mdi-domain"></v-icon>
+        公司名称： {{ fullName }}
       </v-list-item>
-      <v-list-item>
-        <v-list-item
-          ><v-icon icon="mdi-trending-up"></v-icon>股票代码：
-          {{ ticker }}</v-list-item
-        >
+      <v-list-item
+        ><v-icon icon="mdi-trending-up"></v-icon>股票代码：
+        {{ ticker }}
       </v-list-item>
-      <v-list-item>
-        <v-list-item
-          ><v-icon icon="mdi-factory"></v-icon> 所属行业：{{
-            field
-          }}</v-list-item
-        >
+      <v-list-item
+        ><v-icon icon="mdi-factory"></v-icon> 所属行业：{{ field }}
       </v-list-item>
-      <v-list-item>
-        <v-list-item
-          ><v-icon icon="mdi-update"></v-icon> 建立日期：{{ date }}</v-list-item
-        >
-      </v-list-item>
-      <v-list-item>
-        <v-list-item
-          ><v-icon icon="mdi-briefcase-account"></v-icon> 简要介绍：{{
-            message
-          }}</v-list-item
-        >
+      <v-list-item
+        ><v-icon icon="mdi-update"></v-icon> 建立日期：{{ date }}</v-list-item
+      >
+      <v-list-item
+        ><v-icon icon="mdi-briefcase-account"></v-icon> 简要介绍：{{ message }}
       </v-list-item>
     </v-list>
   </div>
@@ -82,32 +67,6 @@ export default {
 </script>
 
 <style scoped>
-.head {
-  margin-bottom: 20px;
-}
-.infor1 {
-  display: inline-block;
-  width: 100%;
-  /* height: 100%; */
-}
-.image {
-  vertical-align: top;
-  margin-right: 5px;
-  width: 20px;
-  height: 20px;
-  fill: none;
-}
-.name {
-  vertical-align: top;
-  margin-top: 10px;
-}
-.content {
-  width: 100%;
-  height: 30px;
-}
-.bottom {
-  margin-top: 15px;
-}
 .header {
   font-weight: bold;
   font-size: 1.2rem;

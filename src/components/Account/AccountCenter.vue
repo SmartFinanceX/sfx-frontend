@@ -1,30 +1,32 @@
 <template>
   <v-container class="d-flex flex-wrap">
     <v-container class="box1">
-      <v-btn
-        v-for="item in items"
-        v-bind:key="item.name"
-        style="height: 110px; width: 19%; margin-left: 1%"
-      >
-        <div class="text-h6 flex-grow-1">
-          <div style="font-size: 1em">
-            {{ item.name }}<v-icon icon="mdi-share-all-outline"></v-icon>
+      <router-link :to="{ name: 'Dashboard' }">
+        <v-btn
+          v-for="item in items"
+          v-bind:key="item.name"
+          style="height: 110px; width: 19%; margin-left: 1%"
+        >
+          <div class="text-h6 flex-grow-1">
+            <div style="font-size: 1em">
+              {{ item.name }}<v-icon icon="mdi-share-all-outline"></v-icon>
+            </div>
+            <div class="text-h5" style="font-weight: bold; font-size: 1em">
+              {{ item.price }}
+            </div>
+            <div
+              :class="{
+                black: item.tag == 0 ? 1 : 0,
+                red: item.tag == 1 ? 1 : 0,
+                green: item.tag == -1 ? 1 : 0,
+              }"
+              style="font-size: 0.7em"
+            >
+              {{ item.range }}
+            </div>
           </div>
-          <div class="text-h5" style="font-weight: bold; font-size: 1em">
-            {{ item.price }}
-          </div>
-          <div
-            :class="{
-              black: item.tag == 0 ? 1 : 0,
-              red: item.tag == 1 ? 1 : 0,
-              green: item.tag == -1 ? 1 : 0,
-            }"
-            style="font-size: 0.7em"
-          >
-            {{ item.range }}
-          </div>
-        </div>
-      </v-btn>
+        </v-btn>
+      </router-link>
     </v-container>
 
     <v-card flat>
@@ -96,8 +98,10 @@ export default {
   },
   data() {
     return {
+      names: ["上证指数", "深证成指", "中小100", "创业板指", "沪深300"],
+      codes: ["sh000001", "sz399001", "sz399005", "sz399006", "sh000300"],
       items: [
-        // 注意这里的tag考虑的还不全面，如果是不跌不涨那么应该是黑色
+        //样例数据
         {
           name: "上证指数",
           price: "3038.97",
@@ -111,19 +115,19 @@ export default {
           tag: 0,
         },
         {
-          name: "创业板指数",
-          price: "2005.24",
-          range: "-13.15(-0.65%)",
-          tag: -1,
-        },
-        {
-          name: "USD/CNY",
+          name: "中小100",
           price: "7.29",
           range: "+0.01(+0.08%)",
           tag: 1,
         },
         {
-          name: "恒生指数",
+          name: "创业板指",
+          price: "2005.24",
+          range: "-13.15(-0.65%)",
+          tag: -1,
+        },
+        {
+          name: "沪深300",
           price: "17203.26",
           range: "-308.20(-1.76%)",
           tag: -1,
@@ -144,19 +148,19 @@ export default {
       ],
       desserts: [
         //数据样例
-        // {
-        //   code: "000001",
-        //   name: "平安银行",
-        //   price: 9.49,
-        //   change: -0.06,
-        //   range: "-0.63%",
-        //   volume: "58.54万",
-        //   turnover: "5.52亿",
-        //   turnoverrate: "0.30%",
-        //   value: "1831.92亿",
-        //   perate: 3.47,
-        //   tag: -1,
-        // },
+        {
+          code: "000001",
+          name: "平安银行",
+          price: 9.49,
+          change: -0.06,
+          range: "-0.63%",
+          volume: "58.54万",
+          turnover: "5.52亿",
+          turnoverrate: "0.30%",
+          value: "1831.92亿",
+          perate: 3.47,
+          tag: -1,
+        },
       ],
       watchlists: [],
       trigger: false,
@@ -211,9 +215,33 @@ export default {
       else if (data < 0) return "green";
       else return "black";
     },
+    getIndex() {
+      let i = 0;
+      for (; i < this.names.length; i++) {
+        let name = this.names[i];
+        this.$http
+          .get(
+            `http://api.mairui.club/zs/sssj/${this.codes[i]}/${this.$mydatakey}`
+          )
+          .then((res) => {
+            // console.log(res);
+            let tag;
+            if (res.data.ud > 0) tag = 1;
+            else if (res.data.ud < 0) tag = -1;
+            else tag = 0;
+            this.items.push({
+              name: name,
+              price: res.data.p,
+              range: res.data.ud + "(" + res.data.pc + "%)",
+              tag: tag,
+            });
+          });
+      }
+    },
   },
   mounted() {
-    this.getData();
+    //为了节省请求次数，到时候打开
+    // this.getIndex();
   },
 };
 </script>

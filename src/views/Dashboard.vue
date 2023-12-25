@@ -1,5 +1,4 @@
 <!-- 网站首页 -->
-<!-- 收藏逻辑还有点问题，selected需要每个进行分配 -->
 <template>
   <v-card-title style="font-weight: bold">市场</v-card-title>
   <v-container class="d-flex flex-wrap">
@@ -132,8 +131,10 @@ export default {
     },
   },
   data: () => ({
+    names: ["上证指数", "深证成指", "中小100", "创业板指", "沪深300"],
+    codes: ["sh000001", "sz399001", "sz399005", "sz399006", "sh000300"],
     items: [
-      // 注意这里的tag考虑的还不全面，如果是不跌不涨那么应该是黑色
+      //样例数据
       {
         name: "上证指数",
         price: "3038.97",
@@ -147,19 +148,19 @@ export default {
         tag: 0,
       },
       {
-        name: "创业板指数",
-        price: "2005.24",
-        range: "-13.15(-0.65%)",
-        tag: -1,
-      },
-      {
-        name: "USD/CNY",
+        name: "中小100",
         price: "7.29",
         range: "+0.01(+0.08%)",
         tag: 1,
       },
       {
-        name: "恒生指数",
+        name: "创业板指",
+        price: "2005.24",
+        range: "-13.15(-0.65%)",
+        tag: -1,
+      },
+      {
+        name: "沪深300",
         price: "17203.26",
         range: "-308.20(-1.76%)",
         tag: -1,
@@ -233,10 +234,35 @@ export default {
         this.watchlists.splice(index, 1);
       }
     },
+    getIndex() {
+      let i = 0;
+      for (; i < this.names.length; i++) {
+        let name = this.names[i];
+        this.$http
+          .get(
+            `http://api.mairui.club/zs/sssj/${this.codes[i]}/${this.$mydatakey}`
+          )
+          .then((res) => {
+            // console.log(res);
+            let tag;
+            if (res.data.ud > 0) tag = 1;
+            else if (res.data.ud < 0) tag = -1;
+            else tag = 0;
+            this.items.push({
+              name: name,
+              price: res.data.p,
+              range: res.data.ud + "(" + res.data.pc + "%)",
+              tag: tag,
+            });
+          });
+      }
+    },
   },
   computed: {},
   mounted() {
     this.getLonghubang();
+    //为了节省请求次数，暂时关闭
+    // this.getIndex();
   },
 };
 </script>

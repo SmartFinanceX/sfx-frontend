@@ -6,7 +6,7 @@
     scroll-behavior="fade-image collapse "
     image="@/images/bg1.jpg"
   > -->
-  <v-app-bar flat class="elevation-1" scroll-behavior="fade-image collapse ">
+  <v-app-bar flat class="elevation-1" scroll-behavior="fade-image  ">
     <v-app-bar-title>
       <router-link to="/dashboard" style="color: #000">
         <v-btn prepend-icon="mdi-finance" variant="text"> </v-btn>

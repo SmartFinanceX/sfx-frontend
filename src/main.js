@@ -16,6 +16,8 @@ axios;
 import * as echarts from "echarts";
 import "vuetify/dist/vuetify.min.css";
 
+import "./styles/bg.css"; // 引入全局样式-背景图片
+
 const app = createApp(App);
 
 app.config.globalProperties.$http = axios;
