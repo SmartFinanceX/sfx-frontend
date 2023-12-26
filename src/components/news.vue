@@ -3,23 +3,10 @@
     <div class="search">
       <v-card class="pa-8 d-flex justify-center flex-wrap">
         <v-responsive max-width="600">
-          <v-img
-            class="mx-auto mt-12 mb-16"
-            max-height="200"
-            max-width="340"
-            src="../images/logo_big.png"
-          ></v-img>
+          <v-img class="mx-auto mt-12 mb-16" max-height="200" max-width="340" src="../images/logo_big.png"></v-img>
 
-          <v-text-field
-            ref="searchField"
-            v-model="text"
-            hide-details
-            label="查找您想看的金融资讯..."
-            prepend-inner-icon="mdi-magnify"
-            single-line
-            clearable
-            @keyup.enter="getData(1)"
-          ></v-text-field>
+          <v-text-field ref="searchField" v-model="text" hide-details label="查找您想看的金融资讯..."
+            prepend-inner-icon="mdi-magnify" single-line clearable @keyup.enter="getData(1)"></v-text-field>
         </v-responsive>
       </v-card>
     </div>
@@ -30,20 +17,11 @@
             <v-col cols="12" v-for="card in cards" :key="card.title">
               <v-card :color="card.color">
                 <div class="d-flex flex-no-wrap justify-space-between">
-                  <v-avatar
-                    @click="window(card.url)"
-                    v-if="card.show"
-                    class="ma-3 clickable"
-                    size="250"
-                    rounded="0"
-                  >
+                  <v-avatar @click="window(card.url)" v-if="card.show" class="ma-3 clickable" size="250" rounded="0">
                     <v-img :src="card.src"></v-img>
                   </v-avatar>
                   <div class="info">
-                    <v-card-title
-                      @click="window(card.url)"
-                      class="text-h5 clickable"
-                    >
+                    <v-card-title @click="window(card.url)" class="text-h5 clickable">
                       {{ card.title }}
                     </v-card-title>
 
@@ -51,13 +29,7 @@
                     <v-card-text>{{ card.description }}</v-card-text>
                     <v-card-text>{{ card.date }}</v-card-text>
                   </div>
-                  <v-avatar
-                    @click="window(card.url)"
-                    v-if="!card.show"
-                    class="ma-3 clickable"
-                    size="250"
-                    rounded="0"
-                  >
+                  <v-avatar @click="window(card.url)" v-if="!card.show" class="ma-3 clickable" size="250" rounded="0">
                     <v-img :src="card.src"></v-img>
                   </v-avatar>
                 </div>
@@ -72,6 +44,12 @@
 
 <script>
 export default {
+  props: {
+    keyword: {
+      type: String,
+      default: ""
+    },
+  },
   data: () => ({
     key: "5edaca3ae98496546e95a7b0be57346b",
     num: [15, 35],
@@ -84,7 +62,8 @@ export default {
       let url;
       if (tag == 1) {
         url = `https://apis.tianapi.com/caijing/index?key=${this.key}&num=${this.num[tag]}&word=${this.text}`;
-      } else {
+      }
+      else {
         url = `https://apis.tianapi.com/caijing/index?key=${this.key}&num=${this.num[tag]}`;
       }
       this.$http.get(url).then((res) => {
@@ -133,7 +112,12 @@ export default {
     },
   },
   mounted: function () {
-    this.getData(0);
+    if (this.$route.params.keyword != null) {
+      this.text = this.$route.params.keyword;
+      this.getData(1);
+    } else {
+      this.getData(0);
+    }
   },
 };
 </script>
@@ -142,13 +126,16 @@ export default {
 .search {
   margin-bottom: 2cm;
 }
+
 .info {
   display: grid;
   place-content: center;
 }
+
 .clickable {
   cursor: pointer;
 }
+
 .text-h5:hover {
   color: #ffa07d;
 }

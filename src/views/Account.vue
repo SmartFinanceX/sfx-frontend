@@ -39,9 +39,7 @@
 
         <v-dialog transition="dialog-bottom-transition" width="auto">
           <template v-slot:activator="{ props }">
-            <v-btn prepend-icon="mdi-logout" v-bind="props" variant="text"
-              >退出登录</v-btn
-            >
+            <v-btn prepend-icon="mdi-logout" v-bind="props" variant="text">退出登录</v-btn>
           </template>
           <template v-slot:default="{ isActive }">
             <v-card>
@@ -50,21 +48,16 @@
                 <div class="text-h4 pa-12">确认退出当前账号吗？</div>
               </v-card-text>
               <v-card-actions class="justify-end">
-                <router-link :to="{ name: 'Login' }"
-                  ><v-btn variant="tonal" style="margin-left: -30%"
-                    >确认</v-btn
-                  ></router-link
-                >
-                <v-btn variant="tonal" @click="isActive.value = false"
-                  >取消</v-btn
-                >
+                <router-link :to="{ name: 'Login' }"><v-btn variant="tonal"
+                    style="margin-left: -30%">确认</v-btn></router-link>
+                <v-btn variant="tonal" @click="isActive.value = false">取消</v-btn>
               </v-card-actions>
             </v-card>
           </template>
         </v-dialog>
       </v-list-item>
     </v-navigation-drawer>
-    <router-view> </router-view>
+    <router-view :userId="1"> </router-view>
   </v-container>
 </template>
 <script setup></script>

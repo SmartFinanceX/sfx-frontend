@@ -26,20 +26,10 @@
       <v-card :title="stockName" :subtitle="ticker"></v-card>
       <v-divider></v-divider>
       <v-list-item>
-        <v-btn
-          v-on:click="addticker"
-          v-if="!selcted"
-          prepend-icon="mdi-eye-plus"
-          variant="text"
-        >
+        <v-btn v-on:click="addticker" v-if="!selcted" prepend-icon="mdi-eye-plus" variant="text">
           添加选股
         </v-btn>
-        <v-btn
-          v-on:click="rmticker"
-          v-else
-          prepend-icon="mdi-eye-minus"
-          variant="text"
-        >
+        <v-btn v-on:click="rmticker" v-else prepend-icon="mdi-eye-minus" variant="text">
           取消选股
         </v-btn>
       </v-list-item>

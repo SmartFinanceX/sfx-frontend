@@ -38,9 +38,10 @@ export default {
   },
   methods: {
     search() {
+      console.log("Stock")
       const url = `${this.$target}/stock/k/${this.ticker}/60`;
       this.$http.get(url).then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         this.data = res.data;
       });
     },

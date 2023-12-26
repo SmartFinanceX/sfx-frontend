@@ -1,7 +1,6 @@
 <template>
   <div>
-    <!-- <div id="main" style="max-width: 1000px; height: calc(100vh - 125px)"></div> -->
-    <div id="main" style="max-width: 1000px; height: 500px"></div>
+    <div id="timely-price" style="max-width: 1000px; height: 500px"></div>
   </div>
 </template>
 
@@ -21,7 +20,7 @@ export default {
   methods: {
     drow() {
       // 获取dom
-      const box = document.getElementById("main");
+      const box = document.getElementById("timely-price");
       const charts = echarts.init(box);
       let htmlfontsize = 16;
       function fontsizes(res) {
@@ -30,7 +29,7 @@ export default {
         fffont = parseFloat(fffont);
         return res * fffont;
       }
-
+      console.log("TimelyPrice")
       //样例数据
       const res = {
         data: [

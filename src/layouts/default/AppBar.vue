@@ -13,7 +13,7 @@
         SmartFinanceX
       </router-link>
     </v-app-bar-title>
-    <div style="min-width: 600px; display: flex"><search-bar></search-bar></div>
+    <div style="min-width: 600px; display: flex"><search-bar @search="search"></search-bar></div>
     <template #append>
       <router-link :to="{ name: 'Dashboard' }">
         <v-btn prepend-icon="mdi-home-outline" variant="text"> 首页 </v-btn>
@@ -60,5 +60,15 @@ export default {
 
   components: {},
   data: () => ({}),
+  methods: {
+    search(way2, msg2) {
+      console.log("App", way2, msg2)
+      this.$router.push({
+        name: "SearchView",
+        params: { way: way2, key: msg2 },
+      }
+      )
+    },
+  }
 };
 </script>

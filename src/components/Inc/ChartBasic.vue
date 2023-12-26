@@ -1,6 +1,6 @@
 <template>
   <div class="frame">
-    <div class="mychart" id="main" style="width: 100%"></div>
+    <div class="mychart" id="fncinfo" style="width: 800px;height: 400px"></div>
   </div>
 </template>
 <script>
@@ -13,6 +13,7 @@ export default {
     },
   },
   data() {
+    var myChart;
     return {
       name: "",
       data: {},
@@ -21,9 +22,10 @@ export default {
   watch: {
     chartdata: {
       handler(newdata, olddata) {
-        console.debug("newdata");
-        // console.log(newdata);
-        // this.convert(this.category);
+        console.log("NEW")
+        console.log(newdata)
+        console.log("OLD")
+        console.log(olddata)
         this.draw(newdata);
       },
       deep: true,
@@ -46,9 +48,6 @@ export default {
     //画公司价值图
     draw(data) {
       // var data = data1.finanace_data;
-      // console.log(data);
-      var chartDom = document.getElementById("main");
-      var myChart = echarts.init(chartDom);
       var option;
 
       option = {
@@ -89,9 +88,13 @@ export default {
           },
         ],
       };
-      option && myChart.setOption(option);
+      option && this.myChart.setOption(option);
     },
   },
+  mounted() {
+    var chartDom = document.getElementById("fncinfo");
+    this.myChart = echarts.init(chartDom);
+  }
 };
 </script>
 
@@ -100,6 +103,7 @@ export default {
   width: 100%;
   /* height: 400px; */
 }
+
 /* .mychart {
     display: inline-block;
   } */

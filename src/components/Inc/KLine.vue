@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="main" style="width: 1000px; height: 500px"></div>
+    <div id="kline" style="width: 1000px; height: 500px"></div>
   </div>
 </template>
 
@@ -44,7 +44,7 @@ export default {
       });
     },
     drawK(res) {
-      var chartDom = document.getElementById("main");
+      var chartDom = document.getElementById("kline");
       var myChart = echarts.init(chartDom);
       //需要提供一个div 给他宽高框框才可以画图，
       const upColor = "#ec0000";
