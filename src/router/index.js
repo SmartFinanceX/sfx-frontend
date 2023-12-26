@@ -27,8 +27,9 @@ const routes = [
         children: [
           {
             name: "SearchView",
-            path: "/search",
+            path: "/search/:way?/:key?",
             component: () => import("@/views/SearchView.vue"),
+            props: true,
           },
           {
             name: "Dashboard",
@@ -44,12 +45,20 @@ const routes = [
             name: "News",
             path: "/news",
             component: () => import("@/views/NewsView.vue"),
+            children: [{
+              props: true,
+              name: "NewsWithKeyWord",
+              path: ":keyword",
+              component: () => import("@/views/NewsView.vue"),
+            }
+            ]
           },
           incRoute,
           account,
           {
             name: "Test",
-            path: "/test",
+            path: "/test/:key",
+            props: true,
             component: () => import("@/views/Test.vue"),
           },
           // {
