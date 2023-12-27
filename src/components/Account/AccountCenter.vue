@@ -102,36 +102,36 @@ export default {
       codes: ["sh000001", "sz399001", "sz399005", "sz399006", "sh000300"],
       items: [
         //样例数据
-        {
-          name: "上证指数",
-          price: "3038.97",
-          range: "-14.31(-0.47%)",
-          tag: -1,
-        },
-        {
-          name: "深证成指",
-          price: "9978.54",
-          range: "0.00(0.00%)",
-          tag: 0,
-        },
-        {
-          name: "中小100",
-          price: "7.29",
-          range: "+0.01(+0.08%)",
-          tag: 1,
-        },
-        {
-          name: "创业板指",
-          price: "2005.24",
-          range: "-13.15(-0.65%)",
-          tag: -1,
-        },
-        {
-          name: "沪深300",
-          price: "17203.26",
-          range: "-308.20(-1.76%)",
-          tag: -1,
-        },
+        // {
+        //   name: "上证指数",
+        //   price: "3038.97",
+        //   range: "-14.31(-0.47%)",
+        //   tag: -1,
+        // },
+        // {
+        //   name: "深证成指",
+        //   price: "9978.54",
+        //   range: "0.00(0.00%)",
+        //   tag: 0,
+        // },
+        // {
+        //   name: "中小100",
+        //   price: "7.29",
+        //   range: "+0.01(+0.08%)",
+        //   tag: 1,
+        // },
+        // {
+        //   name: "创业板指",
+        //   price: "2005.24",
+        //   range: "-13.15(-0.65%)",
+        //   tag: -1,
+        // },
+        // {
+        //   name: "沪深300",
+        //   price: "17203.26",
+        //   range: "-308.20(-1.76%)",
+        //   tag: -1,
+        // },
       ],
       search: "",
       headers: [
@@ -215,33 +215,66 @@ export default {
       else if (data < 0) return "green";
       else return "black";
     },
-    getIndex() {
+
+    // getIndex() {
+    //   let i = 0;
+    //   for (; i < this.names.length; i++) {
+    //     let name = this.names[i];
+    //     this.$http
+    //       .get(
+    //         `http://api.mairui.club/zs/sssj/${this.codes[i]}/${this.$mydatakey}`
+    //       )
+    //       .then((res) => {
+    //         // console.log(res);
+    //         let tag;
+    //         if (res.data.ud > 0) tag = 1;
+    //         else if (res.data.ud < 0) tag = -1;
+    //         else tag = 0;
+    //         this.items.push({
+    //           name: name,
+    //           price: res.data.p,
+    //           range: res.data.ud + "(" + res.data.pc + "%)",
+    //           tag: tag,
+    //         });
+    //       });
+    //   }
+    // },
+
+    async getIndex() {
       let i = 0;
-      for (; i < this.names.length; i++) {
-        let name = this.names[i];
-        this.$http
-          .get(
-            `http://api.mairui.club/zs/sssj/${this.codes[i]}/${this.$mydatakey}`
-          )
-          .then((res) => {
-            // console.log(res);
-            let tag;
-            if (res.data.ud > 0) tag = 1;
-            else if (res.data.ud < 0) tag = -1;
-            else tag = 0;
-            this.items.push({
-              name: name,
-              price: res.data.p,
-              range: res.data.ud + "(" + res.data.pc + "%)",
-              tag: tag,
-            });
+      this.items = [];
+
+      const promises = this.names.map((name, index) => {
+        let code = this.codes[index];
+        const url = `https://web.ifzq.gtimg.cn/appstock/app/minute/query?code=${code}`;
+        return this.$http.get(url).then((res) => {
+          let data = res.data.data;
+          let tag;
+          if (data[code].qt[code][31] > 0) tag = 1;
+          else if (data[code].qt[code][31] < 0) tag = -1;
+          else tag = 0;
+          this.items.push({
+            name: name,
+            price: data[code].qt[code][3],
+            range:
+              data[code].qt[code][31] + "(" + data[code].qt[code][32] + "%)",
+            tag: tag,
+            index: index,
           });
-      }
+        });
+      });
+
+      // 等待所有异步操作完成
+      await Promise.allSettled(promises);
+
+      // 所有异步操作完成后执行的代码
+      // console.log(this.items);
     },
   },
   mounted() {
-    //为了节省请求次数，到时候打开
-    // this.getIndex();
+    // 节约次数
+    this.getData();
+    this.getIndex();
   },
 };
 </script>
