@@ -11,7 +11,7 @@
         <v-col class="left">
           <v-img src="../images/logo_big.png" style="max-height: 200px"></v-img>
           <v-card-text class="text-h6" style="font-weight: bold"
-            >&emsp;&emsp;为帮助广大A股投资者高效获取A股各家上市公司财务信息，辅助他们进⾏投资决策，本小组开发了上市公司财务信息收集与分析系统。本系统实现了行情查询、数据可视化、个人理财、量化交易等多种功能。</v-card-text
+            >&emsp;&emsp;为帮助广大A股投资者高效获取A股各家上市公司财务信息，辅助他们进行投资决策，本小组开发了上市公司财务信息收集与分析系统。本系统实现了行情查询、数据可视化、个人理财、量化交易等多种功能。</v-card-text
           >
         </v-col>
         <v-col class="right">

@@ -13,12 +13,26 @@ export default {
     //   type: String,
     //   required: true,
     // },
+    TData: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {};
   },
+  watch: {
+    TData: {
+      handler(newdata, olddata) {
+        console.debug("Newdata");
+        // console.log(newdata);
+        this.draw(newdata);
+      },
+      deep: true,
+    },
+  },
   methods: {
-    drow() {
+    draw(res) {
       // 获取dom
       const box = document.getElementById("timely-price");
       const charts = echarts.init(box);
@@ -29,204 +43,22 @@ export default {
         fffont = parseFloat(fffont);
         return res * fffont;
       }
-      console.log("TimelyPrice")
+      console.log("TimelyPrice");
       //样例数据
-      const res = {
-        data: [
-          {
-            close: 3592.38, //最新价
-            high: 3593.88, //最高价
-            low: 3590.87, //最低价
-            money: 12686632781.5, //成交量
-            open: 3590.92, //开盘价
-            time: "2021-01-21 09:31", //时间
-            volume: 1010254100, //成交量
-          },
-          {
-            close: 3592.64,
-            high: 3594.12,
-            low: 3591.18,
-            money: 12686632822.3,
-            open: 3591.94,
-            time: "2021-01-21 09:32",
-            volume: 1010254123,
-          },
-          {
-            close: 3593.58,
-            high: 3594.76,
-            low: 3592.45,
-            money: 12686632858.7,
-            open: 3592.89,
-            time: "2021-01-21 09:33",
-            volume: 1010254154,
-          },
-          {
-            close: 3593.12,
-            high: 3595.01,
-            low: 3592.02,
-            money: 12686632890.1,
-            open: 3593.51,
-            time: "2021-01-21 09:34",
-            volume: 1010254185,
-          },
-          {
-            close: 3593.0,
-            high: 3595.7,
-            low: 3592.65,
-            money: 12686632910.2,
-            open: 3593.55,
-            time: "2021-01-21 09:35",
-            volume: 1010254210,
-          },
-          {
-            close: 3594.2,
-            high: 3596.15,
-            low: 3593.05,
-            money: 12686632935.4,
-            open: 3594.1,
-            time: "2021-01-21 09:36",
-            volume: 1010254235,
-          },
-          {
-            close: 3594.58,
-            high: 3596.78,
-            low: 3593.5,
-            money: 12686632960.7,
-            open: 3594.35,
-            time: "2021-01-21 09:37",
-            volume: 1010254260,
-          },
-          {
-            close: 3594.98,
-            high: 3597.0,
-            low: 3593.8,
-            money: 12686632980.9,
-            open: 3594.75,
-            time: "2021-01-21 09:38",
-            volume: 1010254285,
-          },
-          {
-            close: 3595.3,
-            high: 3597.25,
-            low: 3594.2,
-            money: 12686633010.3,
-            open: 3595.0,
-            time: "2021-01-21 09:39",
-            volume: 1010254310,
-          },
-          {
-            close: 3595.75,
-            high: 3597.6,
-            low: 3594.5,
-            money: 12686633040.8,
-            open: 3595.45,
-            time: "2021-01-21 09:40",
-            volume: 1010254335,
-          },
-          {
-            close: 3596.12,
-            high: 3597.95,
-            low: 3594.85,
-            money: 12686633070.2,
-            open: 3595.9,
-            time: "2021-01-21 09:41",
-            volume: 1010254360,
-          },
-          {
-            close: 3596.35,
-            high: 3598.2,
-            low: 3595.05,
-            money: 12686633099.6,
-            open: 3596.15,
-            time: "2021-01-21 09:42",
-            volume: 1010254385,
-          },
-          {
-            close: 3596.85,
-            high: 3598.7,
-            low: 3595.5,
-            money: 12686633158.3,
-            open: 3596.65,
-            time: "2021-01-21 09:43",
-            volume: 1010254435,
-          },
-          {
-            close: 3596.58,
-            high: 3598.43,
-            low: 3595.25,
-            money: 12686633128.9,
-            open: 3596.4,
-            time: "2021-01-21 09:44",
-            volume: 1010254410,
-          },
-
-          {
-            close: 3597.12,
-            high: 3598.98,
-            low: 3595.75,
-            money: 12686633187.6,
-            open: 3596.92,
-            time: "2021-01-21 09:45",
-            volume: 1010254460,
-          },
-          {
-            close: 3597.95,
-            high: 3599.8,
-            low: 3596.5,
-            money: 12686633275.5,
-            open: 3597.75,
-            time: "2021-01-21 09:46",
-            volume: 1010254535,
-          },
-          {
-            close: 3597.4,
-            high: 3599.25,
-            low: 3596.0,
-            money: 12686633216.8,
-            open: 3597.2,
-            time: "2021-01-21 09:47",
-            volume: 1010254485,
-          },
-          {
-            close: 3597.68,
-            high: 3599.53,
-            low: 3596.25,
-            money: 12686633246.1,
-            open: 3597.48,
-            time: "2021-01-21 09:48",
-            volume: 1010254510,
-          },
-
-          {
-            close: 3598.22,
-            high: 3600.08,
-            low: 3596.8,
-            money: 12686633304.8,
-            open: 3598.02,
-            time: "2021-01-21 09:49",
-            volume: 1010254560,
-          },
-          {
-            close: 3598.78,
-            high: 3600.63,
-            low: 3597.3,
-            money: 12686633363.3,
-            open: 3598.58,
-            time: "2021-01-21 09:50",
-            volume: 1010254610,
-          },
-          {
-            close: 3598.5,
-            high: 3600.35,
-            low: 3597.05,
-            money: 12686633334.0,
-            open: 3598.3,
-            time: "2021-01-21 09:51",
-            volume: 1010254585,
-          },
-        ],
-        perClose: 3544.98, //昨收价
-      };
+      // const res = {
+      //   data: [
+      //     {
+      //       close: 3592.38, //当前价
+      //       high: 3593.88, //最高价
+      //       low: 3590.87, //最低价
+      //       money: 12686632781.5, //成交额
+      //       open: 3590.92, //开盘价
+      //       time: "2021-01-21 09:30", //时间
+      //       volume: 1010254100, //成交量
+      //     },
+      //   ],
+      //   perClose: 3544.98, //昨收价
+      // };
 
       //限制x轴
       function creatX() {
@@ -438,7 +270,7 @@ export default {
                 '时间:<span style="margin-left:6rem"> ' +
                   p1.data[2] +
                   '</span><hr size=1 style="margin: 3px 0">',
-                '最新价:<span style="float:right;color:' +
+                '当前价:<span style="float:right;color:' +
                   (p1.data[1] > averLine ? "#FF4A4A" : "#3CC864") +
                   '">' +
                   parseFloat(p1.data[1]) +
@@ -921,39 +753,7 @@ export default {
 
       charts.setOption(getMinOptionData(res.data, res.perClose));
     },
-    // trueTime() {
-    //   const currentHour = new Date().getHours();
-    //   const currentMinute = new Date().getMinutes();
-
-    //   // 检查当前时间是否在9:30-11:30或13:00-15:00
-    //   if (
-    //     (currentHour === 9 && currentMinute >= 30) ||
-    //     (currentHour === 11 && currentMinute <= 30) ||
-    //     (currentHour >= 10 && currentHour < 11) ||
-    //     (currentHour >= 13 && currentHour < 15)
-    //   ) {
-    //     this.drow;
-    //   }
-    // },
-    //     //每分钟请求一次
-    // startInterval() {
-    //   this.timer = setInterval(this.trueTime, 60000);
-    // },
-    // stopInterval() {
-    //   if (this.timer) {
-    //     clearInterval(this.timer);
-    //     this.timer = null;
-    //   }
-    // }
   },
-  mounted: function () {
-    this.drow(); //需要触发的函数，后面改成用定时器触发
-
-    // this.startInterval();
-  },
-  // beforeDestroy() {
-  //   this.stopInterval();
-  // }
 };
 </script>
 

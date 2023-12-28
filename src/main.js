@@ -28,7 +28,7 @@ app.config.globalProperties.$echarts = echarts; //全局使用
 // app.config.globalProperties.$target = "http://localhost:9000"
 
 //定义全局变量，麦蕊（mydata）数据的证书，因为是免费接口，所以每隔一定时期就要重新申请，所以在此定义一个全局变量
-app.config.globalProperties.$mydatakey = "fc21217325a5d2206e";
+app.config.globalProperties.$mydatakey = "55725851845b518d6a";
 
 app.config.globalProperties.$target = "/api";
 registerPlugins(app);
