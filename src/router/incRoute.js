@@ -20,6 +20,7 @@ export default {
       name: "Predict",
       path: "predict",
       component: () => import("@/components/inc/Predict.vue"),
+      props: true,
     },
     {
       name: "Stock",

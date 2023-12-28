@@ -17,6 +17,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
+    hmr: true
   },
   css: {
     loaderOptions: {

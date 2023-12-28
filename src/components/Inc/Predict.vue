@@ -222,12 +222,16 @@ export default {
       </v-container>
     </v-container>
   </v-container>
+  <notify ref="notifyBar"></notify>
 </template>
-<script setup></script>
+<script setup>
+import notify from "@/components/common/notify"
+</script>
 <script>
 import Score from "@/components/Inc/Score.vue";
 import * as echarts from "echarts";
 export default {
+
   props: ["ticker"],
   components: {
     Score,
@@ -237,8 +241,8 @@ export default {
     tab: null,
     tag: 1,
     // 依次对应四个图的数据
-    data1: [60, 73, 85],
-    data2: [34, 78, 45],
+    data1: [-60, 32, 85],
+    data2: [34, 78, 50],
     data3: [60, 73, 85, 32, 12, 86],
     data4: [60, 73, 32, 12, 86],
     text1: [
@@ -266,20 +270,58 @@ export default {
       "• 股东权益比率反映企业长期财务状况 ，股东权益比率越大，资产负债比率就越小，企业财务风险就越小，偿还长期债务的能力就越强。",
       "• 资产负债率反映了在企业的全部资产中由债权人提供的资产所占比重的大小, 反映了债权人向企业提供信贷资金的风险程度, 也反映了企业举债经营的能力。",
     ],
+    chart1: "",
+    chart2: "",
+    chart3: "",
+    chart4: "",
   }),
-  mounted() {
-    this.draw1();
-    this.draw2();
-    this.draw3();
-    this.draw4();
-  },
   methods: {
+    async getData() {
+      var url = `${this.$target}/analyze/inc_analyze/${this.ticker}/1`;
+      let that = this;
+      this.$http.get(url).then((res) => {
+        if (res.data.code != 200) {
+          this.$refs.notifyBar.warnNotify(res.data.msg)
+        } else {
+          this.data1 = res.data.data;
+        }
+        this.draw1();
+      });
+      url = `${this.$target}/analyze/inc_analyze/${this.ticker}/2`;
+      this.$http.get(url).then((res) => {
+        if (res.data.code != 200) {
+          this.$refs.notifyBar.warnNotify(res.data.msg)
+        } else {
+          this.data2 = res.data.data;
+        }
+        this.draw2();
+      });
+      url = `${this.$target}/analyze/inc_analyze/${this.ticker}/3`;
+      this.$http.get(url).then((res) => {
+        if (res.data.code != 200) {
+          this.$refs.notifyBar.warnNotify(res.data.msg)
+        } else {
+          this.data3 = res.data.data;
+        }
+        this.draw3();
+      });
+      url = `${this.$target}/analyze/inc_analyze/${this.ticker}/4`;
+      this.$http.get(url).then((res) => {
+        if (res.data.code != 200) {
+          this.$refs.notifyBar.warnNotify(res.data.msg)
+        } else {
+          this.data4 = res.data.data;
+        }
+        this.draw4();
+      });
+      await console.log("Get Data")
+    },
     click(num) {
       this.tag = num;
     },
     draw1() {
-      var chartDom = document.getElementById("a");
-      echarts.init(chartDom).setOption({
+      console.log(this.data1)
+      this.chart1.setOption({
         title: {
           text: "盈利能力",
         },
@@ -290,9 +332,9 @@ export default {
         radar: {
           // 注意，这里设置的最大值为100，但是实际的情况下可能得到的比率都比较小，为了展示的美观，可以尝试设置最大值为50
           indicator: [
-            { text: "净资产收益率", max: 100 },
-            { text: "毛利率", max: 100 },
-            { text: "净利率", max: 100 },
+            { text: "净资产收益率", max: 4.05814 },
+            { text: "毛利率", max: 57.9693 },
+            { text: "净利率", max: 10 },
           ],
         },
 
@@ -314,8 +356,7 @@ export default {
       });
     },
     draw2() {
-      var chartDom = document.getElementById("b");
-      echarts.init(chartDom).setOption({
+      this.chart2.setOption({
         title: {
           text: "运营能力",
         },
@@ -325,9 +366,9 @@ export default {
 
         radar: {
           indicator: [
-            { text: "应收账款周转率", max: 100 },
-            { text: "存货周转率", max: 100 },
-            { text: "流动资产周转率", max: 100 },
+            { text: "应收账款周转率", max: 114.5790 },
+            { text: "存货周转率", max: 390.0412 },
+            { text: "流动资产周转率", max: 2.4764 },
           ],
         },
 
@@ -341,7 +382,7 @@ export default {
             data: [
               {
                 value: this.data2,
-                name: "运营能力指标(%)",
+                name: "运营能力指标/天",
               },
             ],
           },
@@ -349,8 +390,7 @@ export default {
       });
     },
     draw3() {
-      var chartDom = document.getElementById("c");
-      echarts.init(chartDom).setOption({
+      this.chart3.setOption({
         title: {
           text: "成长能力",
         },
@@ -360,12 +400,12 @@ export default {
 
         radar: {
           indicator: [
-            { text: "主营业务收入增长率", max: 100 },
-            { text: "净利润增长率", max: 100 },
-            { text: "净资产增长率", max: 100 },
-            { text: "总资产增长率", max: 100 },
-            { text: "每股收益增长率", max: 100 },
-            { text: "股东权益增长率", max: 100 },
+            { text: "主营业务收入增长率", max: 28.7201 },
+            { text: "净利润增长率", max: 10 },
+            { text: "净资产增长率", max: 18.1910 },
+            { text: "总资产增长率", max: 22.6009 },
+            { text: "每股收益增长率", max: 10 },
+            { text: "股东权益增长率", max: 13.8586 },
           ],
         },
 
@@ -387,8 +427,7 @@ export default {
       });
     },
     draw4() {
-      var chartDom = document.getElementById("d");
-      echarts.init(chartDom).setOption({
+      this.chart4.setOption({
         title: {
           text: "偿债能力",
         },
@@ -398,11 +437,11 @@ export default {
 
         radar: {
           indicator: [
-            { text: "流动比率", max: 100 },
-            { text: "速动比率", max: 100 },
-            { text: "现金比率", max: 100 },
-            { text: "股东权益比率", max: 100 },
-            { text: "资产负债率", max: 100 },
+            { text: "流动比率", max: 6.4010 },
+            { text: "速动比率", max: 5.3749 },
+            { text: "现金比率", max: 250.132 },
+            { text: "股东权益比率", max: 116.76726 },
+            { text: "资产负债率", max: 83.20726 },
           ],
         },
 
@@ -423,6 +462,17 @@ export default {
         ],
       });
     },
+  },
+  mounted() {
+    var chartDom1 = document.getElementById("a");
+    this.chart1 = echarts.init(chartDom1);
+    var chartDom2 = document.getElementById("b");
+    this.chart2 = echarts.init(chartDom2);
+    var chartDom3 = document.getElementById("c");
+    this.chart3 = echarts.init(chartDom3);
+    var chartDom4 = document.getElementById("d");
+    this.chart4 = echarts.init(chartDom4);
+    this.getData();
   },
 };
 </script>
