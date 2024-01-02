@@ -23,6 +23,12 @@ export default {
       props: true,
     },
     {
+      name: "Board",
+      path: "board",
+      component: () => import("@/components/inc/Board.vue"),
+      props: true,
+    },
+    {
       name: "Stock",
       path: "stock",
       component: () => import("@/components/inc/Stock.vue"),

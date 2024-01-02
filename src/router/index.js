@@ -57,7 +57,7 @@ const routes = [
           account,
           {
             name: "Test",
-            path: "/test/:key",
+            path: "/test",
             props: true,
             component: () => import("@/views/Test.vue"),
           },
