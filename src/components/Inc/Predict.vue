@@ -177,13 +177,39 @@ export default {
         <v-list lines="two">
           <v-list-item title="综合评分：">
             <div style="width: 100%; height: 400px">
-              <score></score>
+              <score :score="score"></score>
             </div>
           </v-list-item>
           <v-divider></v-divider>
           <v-list-item title="预测值:">
-            <v-card-text style="text-align: center">预计在2023年10月16日，以0.86的拟合程度，公司的净利润将会达到80000000元</v-card-text>
-            <v-card-subtitle>基于该公司历史数据，我们得到该公司目前的预测值。</v-card-subtitle>
+            <v-card-text
+              >预计在{{ date }}，公司的{{ predict[0].name }}将以{{
+                predict[0].nihe
+              }}的拟合程度达到{{ predict[0].value }}元</v-card-text
+            >
+            <v-card-text
+              >公司的{{ predict[1].name }}将以{{
+                predict[1].nihe
+              }}的拟合程度达到{{ predict[1].value }}元</v-card-text
+            >
+            <v-card-text
+              >公司的{{ predict[2].name }}将以{{
+                predict[2].nihe
+              }}的拟合程度达到{{ predict[2].value }}元</v-card-text
+            >
+            <v-card-text
+              >公司的{{ predict[3].name }}将以{{
+                predict[3].nihe
+              }}的拟合程度达到{{ predict[3].value }}元</v-card-text
+            >
+            <v-card-text
+              >公司的{{ predict[4].name }}将以{{
+                predict[4].nihe
+              }}的拟合程度达到{{ predict[4].value }}元</v-card-text
+            >
+            <v-card-subtitle
+              >基于该公司历史数据，我们得到该公司目前的预测值。</v-card-subtitle
+            >
           </v-list-item>
         </v-list>
       </v-container>
@@ -196,25 +222,41 @@ export default {
 
           <div v-show="tag == 1">
             <div id="a" class="chart"></div>
-            <p v-for="i in text1.length" v-bind:key="i" style="font-size: 0.9rem; opacity: 0.65">
+            <p
+              v-for="i in text1.length"
+              v-bind:key="i"
+              style="font-size: 0.9rem; opacity: 0.65"
+            >
               {{ text1[i - 1] }}
             </p>
           </div>
           <div v-show="tag == 2">
             <div id="b" class="chart"></div>
-            <p v-for="i in text2.length" v-bind:key="i" style="font-size: 0.9rem; opacity: 0.65">
+            <p
+              v-for="i in text2.length"
+              v-bind:key="i"
+              style="font-size: 0.9rem; opacity: 0.65"
+            >
               {{ text2[i - 1] }}
             </p>
           </div>
           <div v-show="tag == 3">
             <div id="c" class="chart"></div>
-            <p v-for="i in text3.length" v-bind:key="i" style="font-size: 0.95rem; opacity: 0.65">
+            <p
+              v-for="i in text3.length"
+              v-bind:key="i"
+              style="font-size: 0.95rem; opacity: 0.65"
+            >
               {{ text3[i - 1] }}
             </p>
           </div>
           <div v-show="tag == 4">
             <div id="d" class="chart"></div>
-            <p v-for="i in text4.length" v-bind:key="i" style="font-size: 0.9rem; opacity: 0.65">
+            <p
+              v-for="i in text4.length"
+              v-bind:key="i"
+              style="font-size: 0.9rem; opacity: 0.65"
+            >
               {{ text4[i - 1] }}
             </p>
           </div>
@@ -225,18 +267,46 @@ export default {
   <notify ref="notifyBar"></notify>
 </template>
 <script setup>
-import notify from "@/components/common/notify"
+import notify from "@/components/common/notify";
 </script>
 <script>
 import Score from "@/components/Inc/Score.vue";
 import * as echarts from "echarts";
 export default {
-
   props: ["ticker"],
   components: {
     Score,
   },
   data: () => ({
+    score: "66",
+    date: "",
+    predict: [
+      {
+        name: "净利润",
+        nihe: "",
+        value: "",
+      },
+      {
+        name: "总收入",
+        nihe: "",
+        value: "",
+      },
+      {
+        name: "总成本",
+        nihe: "",
+        value: "",
+      },
+      {
+        name: "归母净利润",
+        nihe: "",
+        value: "",
+      },
+      {
+        name: "扣非净利润",
+        nihe: "",
+        value: "",
+      },
+    ],
     // ticker: "000001",
     tab: null,
     tag: 1,
@@ -276,12 +346,37 @@ export default {
     chart4: "",
   }),
   methods: {
+    // getData() {
+    //   //综合评分
+    //   this.score = 0;
+    //   for (let i = 1; i <= 5; i++) {
+    //     this.$http
+    //       .get(`${this.$target}/stock/calculate_scores/${this.ticker}/${i}`)
+    //       .then((res) => {
+    //         // console.log(res);
+    //         this.score += res.data[0].score;
+    //       });
+    //   }
+    //   this.score = this.score / 5;
+
+    //   //预测值
+    //   for (let i = 1; i <= 5; i++) {
+    //     this.$http
+    //       .get(`${this.$target}/stock/predict/${this.ticker}/${i}`)
+    //       .then((res) => {
+    //         // console.log(res);
+    //         this.date = res.data.future_predictions[0].date;
+    //         this.predict[i - 1].value = res.data.future_predictions[0].value;
+    //         this.predict[i - 1].nihe = res.data.r_squared;
+    //       });
+    //   }
+    // },
     async getData() {
       var url = `${this.$target}/analyze/inc_analyze/${this.ticker}/1`;
       let that = this;
       this.$http.get(url).then((res) => {
         if (res.data.code != 200) {
-          this.$refs.notifyBar.warnNotify(res.data.msg)
+          this.$refs.notifyBar.warnNotify(res.data.msg);
         } else {
           this.data1 = res.data.data;
         }
@@ -290,7 +385,7 @@ export default {
       url = `${this.$target}/analyze/inc_analyze/${this.ticker}/2`;
       this.$http.get(url).then((res) => {
         if (res.data.code != 200) {
-          this.$refs.notifyBar.warnNotify(res.data.msg)
+          this.$refs.notifyBar.warnNotify(res.data.msg);
         } else {
           this.data2 = res.data.data;
         }
@@ -299,7 +394,7 @@ export default {
       url = `${this.$target}/analyze/inc_analyze/${this.ticker}/3`;
       this.$http.get(url).then((res) => {
         if (res.data.code != 200) {
-          this.$refs.notifyBar.warnNotify(res.data.msg)
+          this.$refs.notifyBar.warnNotify(res.data.msg);
         } else {
           this.data3 = res.data.data;
         }
@@ -308,19 +403,19 @@ export default {
       url = `${this.$target}/analyze/inc_analyze/${this.ticker}/4`;
       this.$http.get(url).then((res) => {
         if (res.data.code != 200) {
-          this.$refs.notifyBar.warnNotify(res.data.msg)
+          this.$refs.notifyBar.warnNotify(res.data.msg);
         } else {
           this.data4 = res.data.data;
         }
         this.draw4();
       });
-      await console.log("Get Data")
+      await console.log("Get Data");
     },
     click(num) {
       this.tag = num;
     },
     draw1() {
-      console.log(this.data1)
+      console.log(this.data1);
       this.chart1.setOption({
         title: {
           text: "盈利能力",
@@ -332,9 +427,9 @@ export default {
         radar: {
           // 注意，这里设置的最大值为100，但是实际的情况下可能得到的比率都比较小，为了展示的美观，可以尝试设置最大值为50
           indicator: [
-            { text: "净资产收益率", max: 4.05814 },
-            { text: "毛利率", max: 57.9693 },
-            { text: "净利率", max: 10 },
+            { text: "净资产收益率", max: 50, min: -50 },
+            { text: "毛利率", max: 100, min: -100 },
+            { text: "净利率", max: 50, min: -50 },
           ],
         },
 
@@ -366,9 +461,9 @@ export default {
 
         radar: {
           indicator: [
-            { text: "应收账款周转率", max: 114.5790 },
-            { text: "存货周转率", max: 390.0412 },
-            { text: "流动资产周转率", max: 2.4764 },
+            { text: "应收账款周转率", max: 200, min: -50 },
+            { text: "存货周转率", max: 500, min: -50 },
+            { text: "流动资产周转率", max: 50, min: -50 },
           ],
         },
 
@@ -400,12 +495,12 @@ export default {
 
         radar: {
           indicator: [
-            { text: "主营业务收入增长率", max: 28.7201 },
-            { text: "净利润增长率", max: 10 },
-            { text: "净资产增长率", max: 18.1910 },
-            { text: "总资产增长率", max: 22.6009 },
-            { text: "每股收益增长率", max: 10 },
-            { text: "股东权益增长率", max: 13.8586 },
+            { text: "主营业务收入增长率", max: 50, min: -50 },
+            { text: "净利润增长率", max: 50, min: -50 },
+            { text: "净资产增长率", max: 50, min: -50 },
+            { text: "总资产增长率", max: 50, min: -50 },
+            { text: "每股收益增长率", max: 50, min: -50 },
+            { text: "股东权益增长率", max: 50, min: -50 },
           ],
         },
 
@@ -437,11 +532,11 @@ export default {
 
         radar: {
           indicator: [
-            { text: "流动比率", max: 6.4010 },
-            { text: "速动比率", max: 5.3749 },
-            { text: "现金比率", max: 250.132 },
-            { text: "股东权益比率", max: 116.76726 },
-            { text: "资产负债率", max: 83.20726 },
+            { text: "流动比率", max: 50, min: -50 },
+            { text: "速动比率", max: 50, min: -50 },
+            { text: "现金比率", max: 400, min: -100 },
+            { text: "股东权益比率", max: 200, min: -50 },
+            { text: "资产负债率", max: 100, min: -100 },
           ],
         },
 

@@ -1,45 +1,89 @@
 <template>
-  <div>
-    <div class="search">
-      <v-card class="pa-8 d-flex justify-center flex-wrap">
-        <v-responsive max-width="600">
-          <v-img class="mx-auto mt-12 mb-16" max-height="200" max-width="340" src="../images/logo_big.png"></v-img>
+  <v-sheet class="d-flex flex-wrap">
+    <v-sheet class="flex-1-0 ma-2 pa-2" max-width="800">
+      <div>
+        <v-card max-width="1000" class="mx-auto">
+          <v-container>
+            <v-row dense>
+              <v-card-text style="font-weight: bold; font-size: large"
+                >财经新闻</v-card-text
+              >
+              <v-col cols="12" v-for="card in cards" :key="card.title">
+                <v-card :color="card.color">
+                  <div class="d-flex flex-no-wrap justify-space-between">
+                    <v-avatar
+                      @click="window(card.url)"
+                      v-if="card.show"
+                      class="ma-3 clickable"
+                      size="250"
+                      rounded="0"
+                    >
+                      <v-img :src="card.src"></v-img>
+                    </v-avatar>
+                    <div class="info">
+                      <v-card-title
+                        @click="window(card.url)"
+                        class="text-h5 clickable"
+                      >
+                        {{ card.title }}
+                      </v-card-title>
 
-          <v-text-field ref="searchField" v-model="text" hide-details label="查找您想看的金融资讯..."
-            prepend-inner-icon="mdi-magnify" single-line clearable @keyup.enter="getData(1)"></v-text-field>
-        </v-responsive>
-      </v-card>
-    </div>
-    <div>
-      <v-card max-width="1000" class="mx-auto">
-        <v-container>
-          <v-row dense>
-            <v-col cols="12" v-for="card in cards" :key="card.title">
-              <v-card :color="card.color">
-                <div class="d-flex flex-no-wrap justify-space-between">
-                  <v-avatar @click="window(card.url)" v-if="card.show" class="ma-3 clickable" size="250" rounded="0">
-                    <v-img :src="card.src"></v-img>
-                  </v-avatar>
-                  <div class="info">
-                    <v-card-title @click="window(card.url)" class="text-h5 clickable">
-                      {{ card.title }}
-                    </v-card-title>
-
-                    <v-card-subtitle>{{ card.source }}</v-card-subtitle>
-                    <v-card-text>{{ card.description }}</v-card-text>
-                    <v-card-text>{{ card.date }}</v-card-text>
+                      <v-card-subtitle>{{ card.source }}</v-card-subtitle>
+                      <v-card-text>{{ card.description }}</v-card-text>
+                      <v-card-text>{{ card.date }}</v-card-text>
+                    </div>
+                    <v-avatar
+                      @click="window(card.url)"
+                      v-if="!card.show"
+                      class="ma-3 clickable"
+                      size="250"
+                      rounded="0"
+                    >
+                      <v-img :src="card.src"></v-img>
+                    </v-avatar>
                   </div>
-                  <v-avatar @click="window(card.url)" v-if="!card.show" class="ma-3 clickable" size="250" rounded="0">
-                    <v-img :src="card.src"></v-img>
-                  </v-avatar>
-                </div>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card>
+      </div>
+    </v-sheet>
+
+    <v-sheet class="ma-2 pa-2" style="width: 300px">
+      <v-img
+        class=""
+        max-height="200"
+        max-width="340"
+        src="../images/logo_big.png"
+      ></v-img>
+
+      <v-text-field
+        ref="searchField"
+        v-model="text"
+        hide-details
+        label="查找您想看的金融资讯..."
+        prepend-inner-icon="mdi-magnify"
+        single-line
+        clearable
+        @keyup.enter="getData(1)"
+      ></v-text-field>
+      <v-card-text style="font-weight: bold; font-size: large"
+        >IT资讯</v-card-text
+      >
+      <v-card
+        v-for="it in its"
+        v-bind:key="it.title"
+        @click="window(it.url)"
+        class="mx-auto"
+        style="margin-top: 20px"
+      >
+        <v-img class="align-end text-white" height="200" :src="it.picUrl" cover>
+          <v-card-text>{{ it.title }}</v-card-text>
+        </v-img>
       </v-card>
-    </div>
-  </div>
+    </v-sheet>
+  </v-sheet>
 </template>
 
 <script>
@@ -47,7 +91,7 @@ export default {
   props: {
     keyword: {
       type: String,
-      default: ""
+      default: "",
     },
   },
   data: () => ({
@@ -56,14 +100,14 @@ export default {
     cards: [],
     color: ["#bfe9ff", "#7ffac7", "#8cf4f2", "#d1e4ff"],
     text: "",
+    its: [],
   }),
   methods: {
     getData(tag = 0) {
       let url;
       if (tag == 1) {
         url = `https://apis.tianapi.com/caijing/index?key=${this.key}&num=${this.num[tag]}&word=${this.text}`;
-      }
-      else {
+      } else {
         url = `https://apis.tianapi.com/caijing/index?key=${this.key}&num=${this.num[tag]}`;
       }
       this.$http.get(url).then((res) => {
@@ -110,6 +154,20 @@ export default {
     window(url) {
       if (url && typeof url === "string") window.open(url, "_blank");
     },
+    getITData() {
+      let url = `https://apis.tianapi.com/it/index?key=${this.key}&num=20`;
+      this.$http.get(url).then((res) => {
+        // console.log(res);
+        let datas = res.data.result.newslist;
+        for (let i = 0; i < datas.length; i++) {
+          this.its.push({
+            title: datas[i].title,
+            picUrl: datas[i].picUrl,
+            url: datas[i].url,
+          });
+        }
+      });
+    },
   },
   mounted: function () {
     if (this.$route.params.keyword != null) {
@@ -118,6 +176,7 @@ export default {
     } else {
       this.getData(0);
     }
+    this.getITData();
   },
 };
 </script>

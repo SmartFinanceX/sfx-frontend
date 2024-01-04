@@ -8,9 +8,13 @@
 import * as echarts from "echarts";
 
 export default {
-  data: () => ({
-    score: 56,
-  }),
+  props: {
+    score: {
+      type: String,
+      required: true,
+    },
+  },
+  data: () => ({}),
   methods: {
     draw() {
       var chartDom = document.getElementById("main");
