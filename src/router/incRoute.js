@@ -29,6 +29,12 @@ export default {
       props: true,
     },
     {
+      name: "Balance",
+      path: "balance",
+      component: () => import("@/components/Inc/Balance.vue"),
+      props: true,
+    },
+    {
       name: "Stock",
       path: "stock",
       component: () => import("@/components/inc/Stock.vue"),

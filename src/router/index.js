@@ -61,6 +61,7 @@ const routes = [
             props: true,
             component: () => import("@/views/Test.vue"),
           },
+
           // {
           //   name: "Collect",
           //   path: "/collect",
@@ -69,6 +70,13 @@ const routes = [
         ],
       },
     ],
+
+  },
+  {
+    name: "Testvue",
+    path: "/testvue",
+    props: true,
+    component: () => import("@/components/Inc/Balance.vue"),
   },
 ];
 

@@ -105,13 +105,16 @@ export default {
                 { key: "fee", title: "总手续费" },
                 { key: "totalPrice", title: "总成交金额" },
             ],
+            chart: null,
+            style: [0, 0, 0, 0, 0, 0],
         };
     },
 
     methods: {
         echartsInit() {
             var chartDom = document.getElementById("a");
-            echarts.init(chartDom).setOption({
+            this.chart = echarts.init(chartDom);
+            this.chart.setOption({
                 title: {
                     text: '个人交易风格',
                     subtitle: this.ticker
@@ -129,11 +132,11 @@ export default {
                 },
                 series: [
                     {
-                        name: 'Budget vs spending',
+                        name: '个人风格分析',
                         type: 'radar',
                         data: [
                             {
-                                value: [7, 9, 5, 6, 5, 2],
+                                value: this.style,
                                 name: 'Allocated Budget'
                             },
                         ]
@@ -146,14 +149,17 @@ export default {
 
             this.$http.get(requestUrl).then((res) => {
                 console.log("DATA")
-                console.log(res.data)
-                if (res.data.code == "200") {
+                if (res.data.code === "200") {
                     this.tradeHistory = res.data.data.records
                     this.totalCost = res.data.data.totalCost
                     this.priceCost = res.data.data.priceCost
                     this.ownNum = res.data.data.ownNum
                     this.$refs.notifyBar.successNotify("查询历史交易成功")
                     this.recordNum = this.tradeHistory.length
+                    console.log(this.recordNum)
+                    if (this.recordNum != 0) {
+                        this.redraw();
+                    }
                 } else {
                     this.$refs.notifyBar.warnNotify(res.data.msg)
                 }
@@ -172,7 +178,50 @@ export default {
             if (value == 1) return "red";
             else if (value == 2) return "green";
             else return "black";
+        },// 生成一个包含六个随机数的数组
+        generateRandomArray() {
+            const array = [];
+            for (let i = 0; i < 6; i++) {
+                const randomNumber = Math.floor(Math.random() * 10) + 1;
+                array.push(randomNumber);
+            }
+            return array;
         },
+        redraw() {
+
+            this.style = generateRandomArray();
+            var option = {
+                title: {
+                    text: '个人交易风格',
+                    subtitle: this.ticker
+                },
+                radar: {
+                    // shape: 'circle',
+                    indicator: [
+                        { name: '谨慎稳健', max: 10 },
+                        { name: '灵活机动', max: 10 },
+                        { name: '精确决断', max: 10 },
+                        { name: '策略周全', max: 10 },
+                        { name: '长远眼光', max: 10 },
+                        { name: '纪律执行', max: 10 },
+                    ]
+                },
+                series: [
+                    {
+                        name: '个人风格分析',
+                        type: 'radar',
+                        data: [
+                            {
+                                value: this.style,
+                                name: 'Allocated Budget'
+                            },
+                        ]
+                    },
+                ]
+            }
+            console.log(this.style)
+            this.chart.setOption(option)
+        }
     },
     created() {
         this.getTradeHisroty()

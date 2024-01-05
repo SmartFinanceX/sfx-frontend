@@ -44,6 +44,11 @@
         </router-link>
       </v-list-item>
       <v-list-item>
+        <router-link :to="{ name: 'Balance' }">
+          <v-btn prepend-icon="mdi-scale-balance" variant="text"> 结构分析 </v-btn>
+        </router-link>
+      </v-list-item>
+      <v-list-item>
         <router-link :to="{ name: 'Predict' }">
           <v-btn prepend-icon="mdi-sticker-text" variant="text">
             分析预测
