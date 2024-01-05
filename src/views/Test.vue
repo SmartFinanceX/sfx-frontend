@@ -2,7 +2,7 @@
   <board :ticker="this.ticker"></board>
 </template>
 <script setup>
-import board from "@/components/Inc/Board"
+import board from "@/components/Inc/Balance"
 </script>
 <script>
 
