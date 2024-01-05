@@ -35,6 +35,7 @@ export default {
     draw(res) {
       // 获取dom
       const box = document.getElementById("timely-price");
+      console.log("Dom1" + box.clientWidth + box.clientHeight)
       const charts = echarts.init(box);
       let htmlfontsize = 16;
       function fontsizes(res) {

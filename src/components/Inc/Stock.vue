@@ -18,11 +18,7 @@
             <div class="chart">
               <k-line :KData="data" :ticker="ticker"></k-line>
             </div>
-            <p
-              v-for="i in text.length"
-              v-bind:key="i"
-              style="font-size: 0.9rem; opacity: 0.65"
-            >
+            <p v-for="i in text.length" v-bind:key="i" style="font-size: 0.9rem; opacity: 0.65">
               {{ text[i - 1] }}
             </p>
           </v-window-item>

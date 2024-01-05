@@ -311,7 +311,8 @@ export default {
                             visibleMin: 300,
                             label: {
                                 show: true,
-                                formatter: '{b}'
+                                formatter: '{b}',
+                                rotate: 0,
                             },
                             upperLabel: {
                                 show: true,
@@ -670,7 +671,8 @@ export default {
                             visibleMin: 300,
                             label: {
                                 show: true,
-                                formatter: '{b}'
+                                formatter: '{b}',
+                                rotate: 0,
                             },
                             upperLabel: {
                                 show: true,

@@ -14,16 +14,16 @@ export default {
     },
     KData: {
       type: Array,
-      required: true,
     },
   },
   data() {
     return {
       stockName: "",
+      data: null,
     };
   },
   watch: {
-    KData: {
+    data: {
       handler(newdata, olddata) {
         console.debug("Newdata");
         // console.log(newdata);
@@ -39,13 +39,19 @@ export default {
     search() {
       const url = `${this.$target}/inc/_ticker/${this.ticker}`;
       this.$http.get(url).then((res) => {
-        // console.log(res.data);
+        // 
         this.stockName = res.data.data.stockName;
       });
     },
+    kData() {
+      console.log("Stock");
+      const url = `${this.$target}/stock/k/${this.ticker}/60`;
+      this.$http.get(url).then((res) => {
+        console.log(res.data);
+        this.data = res.data;
+      });
+    },
     drawK(res) {
-      var chartDom = document.getElementById("kline");
-      var myChart = echarts.init(chartDom);
       //需要提供一个div 给他宽高框框才可以画图，
       const upColor = "#ec0000";
       const upBorderColor = "#8A0000";
@@ -101,7 +107,7 @@ export default {
         }
         return result;
       }
-      myChart.setOption({
+      this.myChart.setOption({
         //这里需要使用myChart.setOption(option);
         title: {
           text: `${this.stockName}(${this.ticker})`,
@@ -286,6 +292,20 @@ export default {
       });
     },
   },
+  mounted() {
+    document.addEventListener('DOMContentLoaded', function () {
+      var chartContainer = document.getElementById('kline');
+      var interval = setInterval(function () {
+        if (chartContainer.clientHeight > 0) {
+          clearInterval(interval);
+          console.log("DOM KLINE" + chartContainer.clientWidth)
+          // 在这里执行 ECharts 初始化的代码
+          this.myChart = echarts.init(chartContainer);
+          this.kData();
+        }
+      }, 100); // 以毫秒为单位，这里设置定时器的间隔时间为 100 毫秒
+    });
+  }
 };
 </script>
 

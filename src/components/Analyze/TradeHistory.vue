@@ -148,8 +148,7 @@ export default {
             var requestUrl = '/api/analyze/benefit/query_by_user/' + this.userId + "/" + this.ticker;
 
             this.$http.get(requestUrl).then((res) => {
-                console.log("DATA")
-                if (res.data.code === "200") {
+                if (res.data.code == "200") {
                     this.tradeHistory = res.data.data.records
                     this.totalCost = res.data.data.totalCost
                     this.priceCost = res.data.data.priceCost
@@ -189,7 +188,7 @@ export default {
         },
         redraw() {
 
-            this.style = generateRandomArray();
+            this.style = this.generateRandomArray();
             var option = {
                 title: {
                     text: '个人交易风格',
