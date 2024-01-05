@@ -96,7 +96,7 @@ export default {
   },
   data: () => ({
     key: "5edaca3ae98496546e95a7b0be57346b",
-    num: [15, 35],
+    num: [17, 35],
     cards: [],
     color: ["#bfe9ff", "#7ffac7", "#8cf4f2", "#d1e4ff"],
     text: "",
@@ -119,7 +119,10 @@ export default {
         this.cards = []; //置空
 
         for (let i = 0; i < this.num[tag]; i++) {
-          if (datas[i].source != source); //澎湃财经的数据没有description;
+          if (datas[i].source != source) {
+            //澎湃财经的数据没有description;
+            //我也不知道怎么搞
+          }
           //左右显示的逻辑
           show = !show;
 
